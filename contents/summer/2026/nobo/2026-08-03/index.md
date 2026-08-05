@@ -1,5 +1,5 @@
 ---
-title: "There is not meaning"
+title: "There's not meaning"
 date: 2026-08-03
 ---
 
