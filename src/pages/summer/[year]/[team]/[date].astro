@@ -51,6 +51,7 @@ const breadcrumbs = [
 <Layout
         title={`${entry.data.title} - ${teamInfo?.data.name ?? team}活動日記`}
         description={`${formatDate(entry.data.date)}の${teamInfo?.data.name ?? team}活動日記「${entry.data.title}」です。`}
+        image={teamInfo?.data.thumbnail?.src}
         type="article"
         breadcrumbs={breadcrumbs}
         noindex={true}
