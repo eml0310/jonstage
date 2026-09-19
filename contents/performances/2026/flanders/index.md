@@ -37,6 +37,11 @@ offers:
 
 正反対の2人の運命はやがて交わり、第一次世界大戦の渦中へと巻き込まれていく＿＿
 
+## 予約方法
+
+https://yorodu.corich.co/makeinu/reserve
+
+
 ## 日時
 
 2026年
@@ -119,10 +124,6 @@ TEL：06-6147-2897
 - 制作：杏
 - 振付：無笛
 - 殺陣：エミル
-
-## 予約方法
-
-https://yorodu.corich.co/makeinu/reserve
 
 ## お問い合わせ
 
