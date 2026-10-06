@@ -9,7 +9,7 @@ venue:
 playwright: "Tact666cc"
 director: "Tact666cc"
 excerpt: "舞台はお化け屋敷、人はお化け(バイト)達。暗闇の中はサボり放題！この環境でやる気出るはずが…え？MVPにボーナス？俄然やる気の亡者共。呪いの沙汰も金次第。でも規則は守れ！お触り禁止だ！"
-thumbnail: "./hero.avif"
+thumbnail: "./toptoilet.avif"
 offers:
   - label: "当日"
     price: 1000
@@ -20,6 +20,7 @@ offers:
   - label: "小学生以下"
     price: 0
 ---
+
 ## あらすじ
 
 舞台はお化け屋敷、人はお化け(バイト)達。暗闇の中はサボり放題！

@@ -9,10 +9,10 @@ venue:
 playwright: "中屋敷法仁"
 director: "ポイズンマスター"
 excerpt: "君にパトラッシュは救えるか？"
-thumbnail: "./flanders.avif"
 flyer:
   front: "./hero.avif"
   back: "./poster-back.avif"
+thumbnail: "./flanders.avif"
 offers:
   - label: "一般当日"
     price: 1800

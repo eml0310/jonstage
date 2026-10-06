@@ -9,10 +9,10 @@ venue:
 playwright: "ガラキー"
 director: "ガラキー"
 excerpt: "合理が、偶然に堕ちる。"
-thumbnail: "./itiaku.avif"
 flyer:
   front: "./poster.avif"
   back: "./okibira.avif"
+thumbnail: "./itiaku.avif"
 offers:
   - label: "無料"
     price: 0

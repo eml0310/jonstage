@@ -9,10 +9,10 @@ venue:
 playwright: "もぶ"
 director: "もぶ"
 excerpt: "そこは悩みも苦しみもない永遠のティータイムの箱庭。謎の人物ヴィネアに導かれ迷い込んだ人々は過去を捨て夢に浸る。しかし楽園には秘密があった。住民が口にする「ルマの実」の正体と犠牲。ある少女は救済という執着に揺れながら真実へ手を伸ばす。"
-thumbnail: "./nightmare.avif"
 flyer:
   front: "./front.avif"
   back: "./back.avif"
+thumbnail: "./nightmare.avif"
 offers:
   - label: "無料（カンパ制）"
     price: 0

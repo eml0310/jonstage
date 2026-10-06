@@ -9,6 +9,9 @@ venue:
 playwright: "田沢まさゆき"
 director: "田沢まさゆき"
 excerpt: "2008年度の秋公演「リバー」の公演情報です。"
+flyer:
+  front: "./kippu.avif"
+  back: "./index.avif"
 thumbnail: "./hero.avif"
 offers:
   - label: "当日"
@@ -17,8 +20,6 @@ offers:
     price: 700
   - label: "学割"
     price: 500
-flyer:
-  front: "./kippu.avif"
 ---
 
 ## 日時
@@ -43,11 +44,13 @@ flyer:
 
 ## 料金
 
-- 当日　900円
+- 当日900円
+- 前売り700円
+- 学割500円　(要学生証)
 
-- 前売り　700円
+## CAST
 
-- 学割　500円　(要学生証)
+![](./castp.avif)
 
 ## スタッフ
 
@@ -61,3 +64,4 @@ flyer:
 - 制作：みやけかほ、加藤えりか、西倉七瀬、兵々
 - 撮影：itox、ライス
 
+![](./staffp.avif)

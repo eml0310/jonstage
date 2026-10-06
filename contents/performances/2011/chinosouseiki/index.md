@@ -1,6 +1,7 @@
 ---
 name: "血の創世記"
 startDate: 2011-02-20
+endDate: 2011-02-26
 category: "2010年度卒業公演"
 venue:
   name: "茨木市立男女共生センターローズWAM ワムホール"

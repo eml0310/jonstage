@@ -1,14 +1,16 @@
 ---
 name: "Hamstar"
 startDate: 2008-04-09
+endDate: 2008-04-09
 category: "2008年度新入生歓迎公演"
 venue:
   name: "関西大学高槻キャンパス 体育館内TG101教室"
   address: "大阪府高槻市霊仙寺町2-1-1"
-playwright: "万絵巻"
-director: "万絵巻"
+playwright: "宇野祐一朗"
+director: "ゆうし"
 excerpt: "2008年度の新入生歓迎公演「Hamstar」の公演情報です。"
-thumbnail: "./hero.avif"
+flyer:
+  front: "./hero.avif"
 offers:
   - label: "無料"
     price: 0
@@ -31,4 +33,3 @@ offers:
 ## 料金
 
 無料
-

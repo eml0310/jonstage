@@ -2,14 +2,16 @@
 name: "スケッチブック・ボイジャー"
 startDate: 2012-02-24
 endDate: 2012-02-25
-category: "2011年度卒業公演"
+category: "2011年度新人発表公演公演"
 venue:
   name: "茨木市立男女共生センターローズWAM ワムホール"
   address: "大阪府茨木市元町4-7"
 playwright: "成井豊"
 director: "剣ひじり"
 excerpt: "スペースアドベンチャー『流星ナイト』を連載している漫画家のはら。次回はいよいよ最終回だが、締切日になっても原稿は真っ白。思いつくままに筆を進めるが、物語はあらぬ方向へ。果たしてハッピーエンドを迎え、原稿は間に合うのか！？"
-thumbnail: "./hero.avif"
+flyer:
+  front: "./link-img.avif"
+thumbnail: "./rogo.avif"
 offers:
   - label: "無料"
     price: 0
@@ -44,7 +46,7 @@ offers:
 JR茨木駅東へ徒歩10分/阪急茨木市駅西へ徒歩5分  
 
 会場へお越しの際は、公共の交通機関をご利用下さい。
+
 ## 料金
 
 無料
-

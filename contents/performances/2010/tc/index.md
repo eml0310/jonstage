@@ -1,6 +1,7 @@
 ---
 name: "ヒーローなんか辞めてやる！ / センス！"
 startDate: 2010-05-30
+endDate: 2010-05-30
 category: "2010年度高槻キャンパス祭"
 venue:
   name: "関西大学高槻キャンパス TG101教室"
@@ -8,7 +9,7 @@ venue:
 playwright: "永田ユウカ / 黒川善樹"
 director: "永田ユウカ / 黒川善樹"
 excerpt: "2010年度の高槻キャンパス祭で行われた舞台公演。1回生による前座に続き、『ヒーローなんか辞めてやる！』と『センス！』の2作品を上演。また、特設ステージでの小屋公演や模擬店も展開されました。"
-thumbnail: "./hero.avif"
+thumbnail: "./2010tc_top.jpg"
 offers:
   - label: "無料"
     price: 0

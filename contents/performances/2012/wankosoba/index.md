@@ -8,7 +8,7 @@ venue:
 playwright: "万絵巻"
 director: "万絵巻"
 excerpt: "俺たちのネタでとにかく笑わせる！高槻キャンパス祭の間中、特設ステージで繰り広げられたネタ企画。"
-thumbnail: "./hero.avif"
+thumbnail: "./koyalogo.avif"
 offers:
   - label: "無料"
     price: 0
@@ -17,8 +17,10 @@ offers:
 俺たちのネタでとにかく笑わせる！そんな企画です。
 
 ## 時間
+
 高槻キャンパス祭の間中
 
 
 ## 場所
+
 図書館横特設ステージ

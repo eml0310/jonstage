@@ -8,7 +8,9 @@ venue:
 playwright: "栃木ゆーじ"
 director: "栃木ゆーじ"
 excerpt: "トワレアルでのバースデイパーティ。白ウサギを追って迷い込んだアリスと、協力するトランプ兵のエース。二人が辿り着いた先には「マスター」と名乗る謎の人物が。今、明かされる「トワレアル」の真実とは？"
-thumbnail: "./hero.avif"
+flyer:
+  front: "./logos.avif"
+thumbnail: "./a.avif"
 offers:
   - label: "無料"
     price: 0

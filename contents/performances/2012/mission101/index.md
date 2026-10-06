@@ -2,14 +2,16 @@
 name: "MISSION_101"
 startDate: 2012-12-14
 endDate: 2012-12-16
-category: "2012年度冬公演"
+category: "2012年度卒業公演"
 venue:
   name: "大阪市立芸術創造館"
   address: "大阪府大阪市旭区中宮1-11-14"
 playwright: "吉村シュークリーム+劇団赤鬼"
 director: "あずさ"
 excerpt: "時は2172年。タイムパトローラーを目指す6人の若者が、己の夢を叶えるために試練に挑む。ミッションは全部で100。彼らを待ち受ける歴史の真実とは何なのか。そして101番目のミッションが幕を開ける……"
-thumbnail: "./hero.avif"
+flyer:
+  front: "./hero.avif"
+thumbnail: "./rogo.avif"
 offers:
   - label: "一般当日"
     price: 1200
@@ -102,5 +104,3 @@ offers:
 広報：ぽりもと(fin)
 
 制作：キタガワ
-
-

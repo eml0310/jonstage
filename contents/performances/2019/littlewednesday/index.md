@@ -4,14 +4,14 @@ startDate: 2019-10-19
 endDate: 2019-10-20
 category: "2019年度秋公演"
 venue:
-    name: "大阪市立芸術創造館"
-    address: "大阪市旭区中宮1-11-14"
+  name: "大阪市立芸術創造館"
+  address: "大阪市旭区中宮1-11-14"
 playwright: "劇団赤鬼"
 director: "マッシュ"
 excerpt: "兵士となることを宿命づけられ、士官学校で訓練を重ねる少年たち。夜には屋上で星空を見上げ、仲間と共に笑顔の絶えない日々を過ごしていた。そうして季節は流れ、卒業の時が迫る頃。士官学校の中にレジスタンスのスパイが潜入しているという噂が広まり始める。コードネームは、『夢見る爆弾』。知らない人からの手紙、不可解なラジオの音声、宇宙の片隅で過ごした青春。そして、スパイの正体とは──。「いつかまた、君に逢えますように」"
 flyer:
-    front: "./flyer-f.avif"
-    back: "./flyer-b.avif"
+  front: "./flyer-f.avif"
+  back: "./flyer-b.avif"
 thumbnail: "./littlewednesday.avif"
 offers:
   - label: "学生前売"

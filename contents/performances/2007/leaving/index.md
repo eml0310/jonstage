@@ -1,6 +1,7 @@
 ---
 name: "Leaving　School～振り返らずに、胸をはって～"
 startDate: 2007-04-11
+endDate: 2007-04-11
 category: "2007年度新入生歓迎公演"
 venue:
   name: "高槻キャンパスC棟"
@@ -28,4 +29,3 @@ C棟1Fスタジオ
 ## 料金
 
 無料
-
