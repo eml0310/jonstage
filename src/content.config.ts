@@ -2,6 +2,22 @@ import {defineCollection} from 'astro:content';
 import {z} from 'astro/zod';
 import {glob} from 'astro/loaders';
 
+const feature = defineCollection({
+    loader: glob({pattern: '**/index.md', base: './contents/feature'}),
+    schema: ({image}) => z.object({
+        title: z.string(),
+        description: z.string(),
+        date: z.coerce.date(),
+        thumbnail: image().optional(),
+        video: z.object({
+            src: z.string(),
+            width: z.number().int().positive(),
+            height: z.number().int().positive(),
+            type: z.string(),
+        }).optional(),
+    }),
+});
+
 const performances = defineCollection({
     loader: glob({pattern: '**/index.md', base: './contents/performances'}),
     schema: ({image}) => z.object({
@@ -59,10 +75,10 @@ const summerDiaries = defineCollection({
         base: "./contents/summer",
         pattern: "*/*/*/index.md",
     }),
-    schema: ({image}) => z.object({
+    schema: z.object({
         title: z.string(),
         date: z.coerce.date(),
     }),
 });
 
-export const collections = {performances, diary, summerTeams, summerDiaries};
+export const collections = {performances, diary, summerTeams, summerDiaries, feature};

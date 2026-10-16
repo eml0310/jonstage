@@ -1,0 +1,17 @@
+---
+type Item = { slug: string; text: string; children: Item[] };
+type Props = { items: Item[] };
+
+const {items} = Astro.props;
+---
+
+{items.length > 0 && (
+<ul>
+    {items.map((item) => (
+        <li>
+            <a href={`#${item.slug}`}>{item.text}</a>
+            <Astro.self items={item.children}/>
+        </li>
+    ))}
+</ul>
+)}

@@ -1,7 +1,19 @@
 {
   "name": "jonstage",
+  "version": "1.0.0",
+  "description": "yoroduwemaki official website",
+  "homepage": "https://yoroweb.com",
+  "author": "Hiroshi ISOBE",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eml0310/jonstage.git"
+  },
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,9 +21,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.2.9",
-    "sass": "^1.103.1",
-    "typescript": "^7.0.2"
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "asagaoui": "^0.1.10",
+    "astro": "^7.4.0"
+  },
+  "allowScripts": {
+    "esbuild": true
+  },
+  "devDependencies": {
+    "schema-dts": "^2.1.0"
   }
 }

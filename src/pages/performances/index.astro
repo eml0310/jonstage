@@ -3,6 +3,8 @@ import {Image} from 'astro:assets';
 import {getCollection, type CollectionEntry} from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ogpImage from '../../assets/ogp.avif';
+import type {BreadcrumbList, CollectionPage, ItemList} from "schema-dts";
+const currentUrl = new URL(Astro.url.pathname, Astro.url);
 
 const allPerformances = await getCollection('performances');
 
@@ -22,33 +24,95 @@ const performancesByYear = sortedPerformances.reduce((acc: Record<number, Collec
 
 const years = Object.keys(performancesByYear).map(Number).sort((a: number, b: number) => b - a);
 
-const itemListData = {
-    items: sortedPerformances.map(p => ({
-        url: `/performances/${p.id}/`
-    }))
+const breadcrumb: BreadcrumbList = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        {'@type': 'ListItem', position: 1, name: '劇団万絵巻', item: new URL('/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 2, name: '公演', item: currentUrl.toString()},
+    ],
 };
 
-const breadcrumbs = [
-    {name: '公演', item: '/performances/'}
-];
+const pageDescription:string = "劇団万絵巻の過去から現在までの公演一覧です。1994年の設立以来、様々な作品を上演してきました。";
+
+const cleanString = (val?: string): string | undefined => {
+    const trimmed = val?.trim();
+    return trimmed && trimmed.length > 0 ? trimmed : undefined;
+};
+
+const itemList: ItemList = {
+    '@type': 'ItemList',
+    name: '劇団万絵巻 公演一覧',
+    numberOfItems: sortedPerformances.length,
+    itemListElement: sortedPerformances.map((performance, index) => {
+        const itemUrl = new URL(`/performances/${performance.id}/`, currentUrl.origin).toString();
+        const startDate = new Date(performance.data.startDate).toISOString().split('T')[0];
+        const formattedEndDate = performance.data.endDate
+            ? new Date(performance.data.endDate).toISOString().split('T')[0]
+            : undefined;
+        const endDate = formattedEndDate && formattedEndDate !== startDate
+            ? formattedEndDate
+            : undefined;
+
+        const venueName = cleanString(performance.data.venue?.name);
+        const venueAddress = cleanString(performance.data.venue?.address);
+        const location = venueName ? {
+            '@type': 'Place' as const,
+            name: venueName,
+            ...(venueAddress ? {
+                address: {
+                    '@type': 'PostalAddress' as const,
+                    streetAddress: venueAddress,
+                    addressCountry: 'JP' as const,
+                },
+            } : {}),
+        } : undefined;
+
+        return {
+            '@type': 'ListItem',
+            position: index + 1,
+            item: {
+                '@type': 'TheaterEvent',
+                '@id': `${itemUrl}#theaterevent`,
+                url: itemUrl,
+                name: performance.data.name,
+                startDate: startDate,
+                ...(endDate ? { endDate } : {}),
+                ...(location ? { location } : {}),
+                performer: {
+                    '@type': 'TheaterGroup',
+                    '@id': 'https://yoroweb.com/#theatergroup',
+                    name: '劇団万絵巻',
+                },
+            },
+        };
+    }),
+};
+
+const collectionPage: CollectionPage = {
+    '@type': 'CollectionPage',
+    '@id': `${currentUrl.toString()}#collectionpage`,
+    url: currentUrl.toString(),
+    name: '公演',
+    description: pageDescription,
+    inLanguage: 'ja',
+    isPartOf: {
+        '@type': 'WebSite',
+        '@id': 'https://yoroweb.com/#website',
+    },
+    mainEntity: itemList,
+};
 ---
 
-<Layout
-        title="公演"
-        description="劇団万絵巻の過去から現在までの公演一覧です。1994年の設立以来、様々な作品を上演してきました。"
-        schemaType="ItemList"
-        schemaData={itemListData}
-        breadcrumbs={breadcrumbs}
->
+<Layout title="公演" description={pageDescription} schema={[breadcrumb, collectionPage]}>
     <main>
-        <section class="container-md mt-5">
+        <section class="container-lg mt-5">
             <ol class="breadcrumb mb-2">
                 <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">ホーム</a></li>
                 <li class="breadcrumb-item">公演</li>
             </ol>
             <h1 class="h1">公演</h1>
         </section>
-        <nav class="year-nav container-md">
+        <nav class="year-nav container-lg d-none">
             <div class="year-nav__inner">
                 <ul class="year-nav__list" id="year-nav-list">
                     {years.map((year: number) => (
@@ -60,140 +124,160 @@ const breadcrumbs = [
             </div>
         </nav>
         {years.map((year: number) => (
-                <section class="container-md mt-6 year-section" id={year.toString()}>
-                    <h2 class="h2">{year}年</h2>
-                    <div class="mt-5 vstack g-5">
-                        {performancesByYear[year].map((performance: CollectionEntry<'performances'>) => (
-                                <article class="custom-card">
-                                    <div class="custom-card__data">
-                                        <h3 class="h2">{performance.data.name}</h3>
-                                        <div class="hstack g-3">
-                                            <time datetime={new Date(performance.data.startDate).toISOString().split('T')[0]}>
-                                                {new Date(performance.data.startDate).toLocaleDateString('ja-JP', {
-                                                    year: 'numeric',
-                                                    month: 'long',
-                                                    day: 'numeric'
-                                                })}
-                                            </time>
-                                            <span>{performance.data.category}</span>
-                                        </div>
-                                        <p>{performance.data.excerpt}</p>
-                                        <div class="hstack g-3">
-                                            <ul>
-                                                <li>作：{performance.data.playwright}</li>
-                                                <li>演出：{performance.data.director}</li>
-                                            </ul>
-                                        </div>
-                                        <a class="btn btn-fill is-sm"
-                                           href={`/performances/${performance.id}/`}>詳しくみる</a>
-                                    </div>
-                                    <div class="custom-card__img-area">
-                                        <Image class="custom-card__img"
-                                               src={performance.data.thumbnail ?? performance.data.flyer?.front ?? ogpImage}
-                                               alt={performance.data.name}/>
-                                    </div>
-                                </article>
-                        ))}
-                    </div>
-                </section>
+            <section class="mt-6 year-section" id={year.toString()}>
+                <div class="year-area container-lg">
+                    <h2 class="year-box h2 py-2" data-year={year}>{year}年</h2>
+                </div>
+                <div class="container-lg mt-5 vstack">
+                    {performancesByYear[year].map((performance: CollectionEntry<'performances'>) => (
+                        <article class="custom-card">
+                            <div class="custom-card__data">
+                                <h3 class="h2">{performance.data.name}</h3>
+                                <div class="hstack g-3">
+                                    <time datetime={new Date(performance.data.startDate).toISOString().split('T')[0]}>
+                                        {new Date(performance.data.startDate).toLocaleDateString('ja-JP', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
+                                    </time>
+                                    <span>{performance.data.category}</span>
+                                </div>
+                                <p>{performance.data.excerpt}</p>
+                                <div class="hstack g-3">
+                                    <ul>
+                                        <li>作：{performance.data.playwright}</li>
+                                        <li>演出：{performance.data.director}</li>
+                                    </ul>
+                                </div>
+                                <a class="btn btn-fill is-sm"
+                                   href={`/performances/${performance.id}/`}>詳しくみる</a>
+                            </div>
+                            <figure class="custom-card__img-area">
+                                <Image class="custom-card__img"
+                                       src={performance.data.thumbnail ?? performance.data.flyer?.front ?? ogpImage}
+                                       alt={performance.data.name}/>
+                            </figure>
+                        </article>
+                    ))}
+                </div>
+            </section>
         ))}
         <section class="bg-grey-100 py-6 mt-6">
-            <div class="container-sm">
+            <div class="container-lg">
                 <h2 class="h2 mb-3">私たちの公演の歴史</h2>
-                <p class="mb-3">
-                    1994年の劇団設立以来、古典的な作品から現代的な作品まで、様々な舞台を制作してきました。このアーカイブは、多様なストーリーテリングと芸術的な卓越性への私たちの取り組みを表しています。
-                </p>
-                <p class="">
-                    公演履歴の詳細情報や、研究目的のためのアーカイブ資料のリクエストについては、
-                    <a href="/contact/" class="link">お問い合わせ</a>ください。
-                </p>
+                <p class="mb-3">1994年の劇団設立以来、古典的な作品から現代的な作品まで、様々な舞台を制作してきました。</p>
+                <p class="">公演履歴の詳細情報や、研究目的のためのアーカイブ資料のリクエストについては、<a href="/contact/" class="link">お問い合わせ</a>ください。</p>
             </div>
         </section>
     </main>
 </Layout>
 
 <script>
-  const sections = document.querySelectorAll<HTMLElement>('.year-section');
-  const links = document.querySelectorAll<HTMLAnchorElement>('.badge.badge-outline');
+    const sections = document.querySelectorAll<HTMLElement>('.year-section');
+    const links = document.querySelectorAll<HTMLAnchorElement>('.badge.badge-outline');
 
-  const setActive = (id: string) => {
-    links.forEach(link => {
-      link.classList.toggle('badge-fill', link.dataset.year === id);
-    });
-    const activeLink = document.querySelector<HTMLAnchorElement>(`.badge.badge-outline[data-year="${id}"]`);
-    activeLink?.scrollIntoView({block: 'nearest', inline: 'center'});
-  };
+    const setActive = (id: string) => {
+        links.forEach(link => {
+            link.classList.toggle('badge-fill', link.dataset.year === id);
+        });
+        const activeLink = document.querySelector<HTMLAnchorElement>(`.badge.badge-outline[data-year="${id}"]`);
+        activeLink?.scrollIntoView({block: 'nearest', inline: 'center'});
+    };
 
-  const observer = new IntersectionObserver(
-    entries => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          setActive(entry.target.id);
-          break;
-        }
-      }
-    },
-    {rootMargin: '-10% 0px -80% 0px', threshold: 0}
-  );
+    const observer = new IntersectionObserver(
+        entries => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) {
+                    setActive(entry.target.id);
+                    break;
+                }
+            }
+        },
+        {rootMargin: '-10% 0px -80% 0px', threshold: 0}
+    );
 
-  sections.forEach(section => observer.observe(section));
+    sections.forEach(section => observer.observe(section));
 </script>
 
-<style lang="scss">
-  .year-nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255, 255, 255, .92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid #e0e0e0;
-    margin-top: 2rem;
-
-    &__inner {
-      overflow-x: auto;
+<style>
+    .year-area {
+        position: relative;
+    }
+    .year-box {
+        border-bottom: 1px solid #1a1a1a;
     }
 
-    &__list {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: .5rem;
-      list-style: none;
-      margin: 0;
-      padding: .625rem 1rem;
-      width: max-content;
-      min-width: 100%;
-    }
-  }
-
-  .year-section {
-    scroll-margin-top: 6rem;
-  }
-
-  .custom-card {
-    border: 1px solid #949494;
-    display: grid;
-    grid-template-columns: .4fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas: "img data";
-
-    &__img-area {
-      grid-area: img;
-      border-right: 1px solid #949494;
+    .year-box::after {
+        content: attr(data-year);
+        position: absolute;
+        pointer-events: none;
+        right: 1rem;
+        color: #ffffff;
+        -webkit-text-stroke: 2px rgb(0 0 0 / 0.25);
+        font-size: 4rem;
+        transform: translateY(-25%);
     }
 
-    &__img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .year-nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 255, 255, .92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px dashed #e0e0e0;
+        margin-top: 2rem;
     }
 
-    &__data {
-      padding: 1rem 1.5rem;
-      grid-area: data;
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
+    .year-nav__inner {
+        overflow-x: auto;
     }
-  }
+
+    .year-nav__list {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: .5rem;
+        list-style: none;
+        margin: 0;
+        padding: .625rem 1rem;
+        width: max-content;
+        min-width: 100%;
+    }
+
+    .year-section {
+        scroll-margin-top: 6rem;
+    }
+
+    .custom-card {
+        display: grid;
+        grid-template-columns: .5fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: "img data";
+        border-bottom: 1px dashed #1a1a1a;
+        padding: 2.5rem 0;
+    }
+
+    .custom-card:last-child {
+        border-bottom: none;
+    }
+
+    .custom-card__img-area {
+        grid-area: img;
+    }
+
+    .custom-card__img {
+        margin: 0 auto;
+        width: auto;
+        height: 100%;
+        max-height: 300px;
+        object-fit: cover;
+    }
+
+    .custom-card__data {
+        padding: 0 1.5rem;
+        grid-area: data;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
 </style>

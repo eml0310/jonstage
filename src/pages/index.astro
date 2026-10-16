@@ -1,109 +1,348 @@
 ---
 import {Image} from 'astro:assets';
+import type {TheaterGroup, WebSite} from 'schema-dts';
 import Layout from '../layouts/Layout.astro';
-import heroimg03 from '../assets/index/heroimg03.avif';
+
+// Import images
+import heroimg05 from '../assets/index/heroimg05.avif';
 import heroimg09 from '../assets/index/heroimg09.avif';
 import heroimg23 from '../assets/index/heroimg23.avif';
-import heroimg16 from '../assets/index/heroimg16.avif';
 import heroimg26 from '../assets/index/heroimg26.avif';
-import heroimg31 from '../assets/index/heroimg31.avif';
+import heroimg34 from '../assets/index/heroimg34.avif';
+import heroimg24 from '../assets/index/heroimg24.avif';
+import flanders from '../assets/index/flanders.avif';
+
+const organization: TheaterGroup = {
+    '@type': 'TheaterGroup',
+    '@id': 'https://yoroweb.com/#theatergroup',
+    name: '劇団万絵巻',
+    alternateName: 'Yoroduwemaki',
+    url: 'https://yoroweb.com/',
+    logo: 'https://yoroweb.com/web-app-manifest-512x512.png',
+    description: '関西大学高槻キャンパスで活動している学生劇団で、1994年以来ダンスコメディを始めなんでもありのエンターテイメントを追求しています。',
+    slogan: '殺陣!ダンス!コメディ!なんでもありのエンタメ劇団！',
+    email: 'mail@yoroweb.com',
+    foundingDate: '1994',
+    memberOf: {
+        '@type': 'CollegeOrUniversity',
+        name: '関西大学',
+        url: 'https://www.kansai-u.ac.jp/',
+    },
+    contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        email: 'mail@yoroweb.com',
+        url: 'https://yoroweb.com/contact/',
+        availableLanguage: 'ja',
+    },
+    sameAs: [
+        'https://x.com/Yoroduwemaki',
+        'https://www.instagram.com/yoroduwemaki',
+    ],
+};
+
+const website: WebSite = {
+    '@type': 'WebSite',
+    '@id': 'https://yoroweb.com/#website',
+    url: 'https://yoroweb.com/',
+    name: '劇団万絵巻',
+    alternateName: 'Yoroduwemaki',
+    inLanguage: 'ja',
+    publisher: {'@id': 'https://yoroweb.com/#theatergroup'},
+};
 ---
 
-<Layout>
+<Layout schema={[organization, website]}>
     <main>
-        <section class="mt-5 container-xl custom-hero-area">
-            <div class="custom-hero_text vstack justify-center align-items-center">
-                <h1 class="h1 text-center mb-4">殺陣!ダンス!コメディ!<br/>なんでもありのエンタメ劇団！</h1>
-                {
-                <h2 class="h5 mb-2">公演予定</h2>
-                <p class="text-center">関西大学演劇サークル劇団万絵巻2026年度秋公演<br/><a class="link" href="/performances/2026/flanders/">『フランダースの負け犬』</a></p>
-                }
-            </div>
-            <Image class="custom-hero_img custom-img_1" src={heroimg23} alt=""/>
-            <Image class="custom-hero_img custom-img_2" src={heroimg31} alt=""/>
-            <Image class="custom-hero_img custom-img_3" src={heroimg16} alt=""/>
-            <Image class="custom-hero_img custom-img_4" src={heroimg03} alt=""/>
-            <Image class="custom-hero_img custom-img_5" src={heroimg26} alt=""/>
-        </section>
-        <section class="container-lg grid g-4 mt-7">
-            <div class="col-12 col-md-6">
-                <h2 class="h2 text-center">私たちについて</h2>
-                <p class="mt-3">
-                    劇団万絵巻は1994年に創立され、殺陣・ダンス・コメディといったエンターテインメントを中心に、幅広い作品づくりを行っている学生劇団です。年間約5本の公演を行い、これまでに数多くの舞台を上演してきました。私たちの使命は、物語から創作することを大切にし、作品に力強い命を吹き込み、観客の記憶に残る体験を提供することです。自由な発想と芸術性を重んじながら、日々活動しています。
-                </p>
-                <p class="mt-3">
-                    演劇やものづくりに興味のある方、新しい体験がしたい方は、ぜひ一度公演をご覧ください。また、私たちの活動に少しでも関心をお持ちの方は、初心者の方も歓迎しておりますので、お気軽にお問い合わせいただくか、S棟までお越しください。
-                </p>
-            </div>
-            <div class="col-12 col-md-6">
-                <Image class="img-fluid" style="border-radius: 12px;" src={heroimg09} alt="2024年劇団万絵巻の集合写真"/>
-            </div>
-        </section>
+        <article>
+            <section class="top-hero bg-grey-900 text-white">
+                <span class="h5 text-center d-block" style="text-wrap: balance;word-break: auto-phrase;">私たちは</span>
+                <h1 class="top-hero-title fw-b text-center" style="line-height: 1.3;text-wrap: balance;word-break: auto-phrase;">殺陣!ダンス!コメディ!<br/>なんでもありのエンタメ劇団！</h1>
+                <div class="hero-images-area">
+                    <figure class="hero-image hero-image-left">
+                        <Image class="" src={heroimg34} alt=""/>
+                    </figure>
+                    <figure class="hero-image hero-image-right">
+                        <Image class="" src={heroimg24} alt=""/>
+                    </figure>
+                </div>
+                <p class="top-hero-lead mx-auto text-center" style="max-width: 768px;text-wrap: balance;word-break: auto-phrase;">劇団万絵巻は、殺陣・ダンス・コメディ、ジャンルを超えて、観客の記憶に残る舞台を創り続けてきました。1994年の創立以来、年間約5回の公演で、自由な発想と情熱を形にしています。</p>
+                <div class="hero-main-images">
+                    <figure class="hero-main-image">
+                        <Image src={heroimg23} alt=""/>
+                    </figure>
+                    <figure class="hero-main-image">
+                        <Image src={heroimg05} alt=""/>
+                    </figure>
+                    <figure class="hero-main-image">
+                        <Image src={heroimg26} alt=""/>
+                    </figure>
+                </div>
+            </section>
+            <section class="container-lg mt-8">
+                <h2 class="h1">最新公演</h2>
+                <div class="c-performance mt-4">
+                    <figure class="c-performance-image">
+                        <Image src={flanders} alt="Made in NIGHTMARE"/>
+                    </figure>
+                    <div class="c-performance-content">
+                        <p class=""><time>2026年10月23日</time></p>
+                        <h3 class="h2">フランダースの負け犬</h3>
+                        <p class="mt-2">作: 中屋敷法仁 演出: ポイズンマスター</p>
+                        <p class="mt-3">君にパトラッシュは救えるか？</p>
+                        <p class="mt-3"><a class="mr-0 ml-auto link" href="/performances/2026/flanders/">詳細情報を見る</a></p>
+                    </div>
+                </div>
+            </section>
+            <section class="container-lg mt-8 bg-grey-900 text-white p-cta">
+                <div class="p-cta-head">
+                    <h2 class="h2">劇団万絵巻の公演を見る</h2>
+                    <p class="fs-20 mt-3">これまでに上演した作品を、年代順にご紹介しています。はじめて劇団万絵巻を知った方も、気になる作品や過去の公演から、私たちの舞台をご覧ください。</p>
+                </div>
+                <div class="p-cta-link">
+                    <a class="fs-22 fw-b" href="/performances/">公演一覧を見る<i class="aif-arrow_right"></i></a>
+                </div>
+            </section>
+            <section class="container-lg mt-8 hero-with mb-7">
+                <div class="hero-with-text">
+                    <h2 class="h1 mt-2">私たちについて</h2>
+                    <p class="fs-18 mt-4">劇団万絵巻は1994年に創立された学生劇団です。演劇やものづくりに興味のある方、新しい体験がしたい方は、ぜひ一度公演をご覧ください。また、私たちの活動に少しでも関心をお持ちの方は、初心者の方も歓迎しておりますので、お気軽にお問い合わせください。</p>
+                    <a class="link d-inline-block mt-4" href="/welcome/">新入生歓迎特集</a>
+                    <a class="link d-inline-block mt-2" href="/contact/">お問い合わせ</a>
+                </div>
+                <figure class="hero-with-image">
+                    <Image src={heroimg09} alt=""/>
+                </figure>
+            </section>
+        </article>
     </main>
 </Layout>
 
-<style lang="scss">
-  .custom-hero-area {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 150px auto 150px 150px 150px 150px;
-    gap: .5rem;
-  }
-
-  .custom-hero_text {
-    padding: 1.5rem 0;
-    order: 2;
-  }
-
-  .custom-hero_img {
-    border-radius: 12px;
-    width: 100%;
-    height: 375px;
-    object-fit: cover;
-    aspect-ratio: 1 / 1;
-  }
-
-  .custom-img_1 {
-    order: 1;
-  }
-
-  .custom-img_2 {
-    order: 3;
-  }
-
-  .custom-img_3 {
-    order: 4;
-  }
-
-  .custom-img_4 {
-    order: 5;
-  }
-
-  .custom-img_5 {
-    order: 6;
-  }
-
-  @media screen and (min-width: 768px) {
-    .custom-hero-area {
-      grid-template-columns: 150px auto 150px;
-      grid-template-rows: auto auto;
+<style>
+    .top-hero {
+        padding: 60px 1rem 80px 1rem;
+        overflow-x: clip;
     }
-    .custom-hero_text {
-      padding: 0;
-    }
-  }
 
-  @media screen and (min-width: 992px) {
-    .custom-hero-area {
-      grid-template-columns: 200px auto 200px;
-      grid-template-rows: auto auto;
+    .top-hero-title {
+        font-size: 1.75rem;
     }
-  }
 
-  @media screen and (min-width: 1280px) {
-    .custom-hero-area {
-      grid-template-columns: 325px auto 325px;
-      grid-template-rows: auto auto;
+    .top-hero-lead {
+        font-size: 1.125rem;
+        font-weight: 700;
+        line-height: 1.7;
     }
-  }
+
+    .hero-images-area {
+        display: block;
+        position: relative;
+        width: 100%;
+        max-width: 360px;
+        height: 320px;
+        margin: 2rem auto;
+    }
+
+    .hero-image {
+        position: absolute;
+
+        img {
+            border-radius: 12px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    }
+
+    .hero-image-left {
+        top: 0;
+        left: 0;
+        width: 68%;
+        aspect-ratio: 4 / 3;
+        transform: rotate(-3deg);
+    }
+
+    .hero-image-right {
+        top: 40px;
+        right: 0;
+        width: 48%;
+        aspect-ratio: 9 / 16;
+        transform: rotate(3deg);
+        z-index: 1;
+    }
+
+    .hero-main-images {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        align-items: center;
+        margin-top: 2.25rem;
+    }
+
+    .hero-main-image {
+        width: 100%;
+        max-width: 480px;
+        height: auto;
+        margin: 0;
+    }
+
+    .hero-main-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+
+    .hero-main-image:nth-child(1) img {
+        aspect-ratio: 1 / 1;
+    }
+
+    .hero-main-image:nth-child(2) img {
+        aspect-ratio: 16 / 9;
+    }
+
+    .hero-main-image:nth-child(3) img {
+        aspect-ratio: 4 / 3;
+    }
+
+    .p-cta {
+        padding: 56px;
+        border-radius: 8px 80px 8px 8px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .p-cta-head {
+        flex: 1;
+    }
+
+    .p-cta-link {
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        flex: 1;
+
+        a {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+    }
+
+    .hero-with {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .hero-with-text {
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .hero-with-image {
+        flex: 1;
+
+        img {
+            height: 100%;
+            border-radius: 12px;
+            width: auto;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+        }
+    }
+
+    .c-performance {
+        display: flex;
+        gap: 32px;
+        flex-direction: column;
+    }
+
+    .c-performance-image {
+        flex: 1;
+        max-height: 400px;
+
+        img {
+            height: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+
+        }
+    }
+
+    .c-performance-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    @media screen and (min-width: 768px) {
+        .top-hero {
+            padding: 150px 1rem 225px 1rem;
+        }
+
+        .top-hero-title {
+            font-size: 3.5625rem;
+        }
+
+        .top-hero-lead {
+            font-size: 2rem;
+            line-height: 1.5;
+        }
+
+        .hero-images-area {
+            max-width: none;
+            height: 1000px;
+            margin: 0;
+        }
+
+        .hero-image-left {
+            top: 150px;
+            left: auto;
+            right: calc(50% - 140px);
+            width: auto;
+
+            img {
+                max-width: 850px;
+            }
+        }
+
+        .hero-image-right {
+            top: 200px;
+            right: auto;
+            left: calc(50% + 125px);
+            width: 400px;
+            max-height: 650px;
+            z-index: auto;
+        }
+
+        .hero-main-images {
+            flex-direction: row;
+            justify-content: space-around;
+            gap: 0;
+            margin-top: 4rem;
+        }
+
+        .hero-main-image {
+            width: auto;
+            max-width: none;
+            height: 375px;
+        }
+
+        .hero-main-image img {
+            width: auto;
+            height: 100%;
+        }
+
+        .c-performance,
+        .p-cta,
+        .hero-with {
+            flex-direction: row;
+        }
+    }
 </style>

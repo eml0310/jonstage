@@ -1,0 +1,146 @@
+---
+import {getCollection, render} from 'astro:content';
+const currentUrl = new URL(Astro.url.pathname, Astro.url);
+import type {InferGetStaticPropsType, MarkdownHeading} from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+
+export async function getStaticPaths() {
+    const features = await getCollection('feature');
+    return features.map((entry) => ({
+        params: {id: entry.id},
+        props: {entry},
+    }));
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const {entry} = Astro.props;
+const {title, date, video} = entry.data;
+const {Content, headings} = await render(entry);
+
+type TocItem = MarkdownHeading & { children: TocItem[] };
+
+const toc: TocItem[] = [];
+const stack: TocItem[] = [];
+
+for (const heading of headings) {
+    const item: TocItem = {...heading, depth: Math.max(heading.depth, 2), children: []};
+    while ((stack.at(-1)?.depth ?? 0) >= item.depth) stack.pop();
+    (stack.at(-1)?.children ?? toc).push(item);
+    stack.push(item);
+}
+const formatDate = (date: Date) =>
+    new Intl.DateTimeFormat("ja-JP", {dateStyle: "long"}).format(date);
+
+import type {Article, BreadcrumbList, VideoObject} from "schema-dts";
+
+const breadcrumb: BreadcrumbList = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        {'@type': 'ListItem', position: 1, name: '劇団万絵巻', item: new URL('/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 2, name: '特集', item: new URL('/feature/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 3, name: title},
+    ],
+}
+
+const image = entry.data.thumbnail
+    ? new URL(entry.data.thumbnail.src, currentUrl.origin).toString()
+    : undefined;
+
+const videoObject: VideoObject | undefined = video
+    ? {
+        '@type': 'VideoObject',
+        '@id': `${currentUrl.toString()}#video`,
+        name: title,
+        description: entry.data.description,
+        uploadDate: date.toISOString(),
+        contentUrl: new URL(video.src, currentUrl.origin).toString(),
+        ...(image ? {thumbnailUrl: image} : {}),
+        inLanguage: 'ja',
+    }
+    : undefined;
+
+const article: Article = {
+    '@type': 'Article',
+    '@id': `${currentUrl.toString()}#article`,
+    url: currentUrl.toString(),
+    headline: title,
+    datePublished: date.toISOString(),
+    description: entry.data.description,
+    inLanguage: 'ja',
+    ...(image ? {image} : {}),
+    ...(videoObject ? {video: videoObject} : {}),
+    publisher: {
+        '@type': 'TheaterGroup',
+        '@id': 'https://yoroweb.com/#theatergroup',
+    },
+    isPartOf: {
+        '@type': 'WebSite',
+        '@id': 'https://yoroweb.com/#website',
+    },
+};
+---
+
+<Layout title={`${title} - 特集`} description={entry.data.description} schema={[breadcrumb, article, ...(videoObject ? [videoObject] : [])]}>
+    <main>
+        <article>
+            <div class="container-lg mt-5">
+                <nav>
+                    <ol class="breadcrumb mb-2">
+                        <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">ホーム</a></li>
+                        <li class="breadcrumb-item"><a class="breadcrumb-link" href="/feature/">特集</a></li>
+                        <li class="breadcrumb-item"><a class="breadcrumb-link" href="/feature/">{date.getFullYear()}年</a></li>
+                        <li class="breadcrumb-item">{title}</li>
+                    </ol>
+                </nav>
+                <h1 class="h1 mb-2">{title}</h1>
+                <time datetime={date.toISOString()}>{formatDate(date)}</time>
+            </div>
+            {video && (
+                <div class="container-lg mt-2 mb-3">
+                    <video width={video.width} height={video.height} class="w-100 h-auto" controls>
+                        <source src={video.src} type={video.type}/>
+                    </video>
+                </div>
+            )}
+            <div class="custom-layout-grid mb-6">
+                <div class="custom-main-content content">
+                    <Content/>
+                </div>
+                <aside class="custom-toc">
+                    <div class="toc-inner">
+                        <p class="mb-3">このページの目次</p>
+                        <nav class="toc">
+                            <TableOfContents items={toc}/>
+                        </nav>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    </main>
+</Layout>
+
+<style>
+    .custom-layout-grid {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: minmax(auto, min-content) 704px minmax(auto, 288px);
+        grid-template-areas: "side main toc";
+    }
+
+    .custom-main-content {
+        grid-area: main;
+        padding: 0 1rem;
+    }
+
+    .custom-toc {
+        grid-area: toc;
+        padding: 0 1rem;
+    }
+
+    .toc-inner {
+        position: sticky;
+        top: 1rem;
+    }
+</style>

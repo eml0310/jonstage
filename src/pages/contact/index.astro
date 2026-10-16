@@ -1,0 +1,156 @@
+---
+const currentUrl = new URL(Astro.url.pathname, Astro.url);
+import Layout from "../../layouts/Layout.astro";
+import type {BreadcrumbList} from "schema-dts";
+
+const breadcrumb: BreadcrumbList = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        {'@type': 'ListItem', position: 1, name: '劇団万絵巻', item: new URL('/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 2, name: 'お問い合わせ'},
+    ],
+}
+---
+<Layout title="お問い合わせ" schema={[breadcrumb]}>
+    <main class="">
+        <section class="container-lg mt-5 mb-5">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">ホーム</a></li>
+                <li class="breadcrumb-item">お問い合わせ</li>
+            </ol>
+            <h1 class="h1">お問い合わせ</h1>
+            <p class="mt-2">お問い合わせはメールにて受け付けています。ご質問、ご相談など、お気軽にお問い合わせください。</p>
+        </section>
+        <section class="container-lg address-card mt-5 mb-5">
+            <div>
+                <p class="label">メールアドレス</p>
+                <p class="fs-32 fw-b" id="mail-address">mail@yoroweb.com</p>
+            </div>
+            <div class="address-actions mt-5">
+                <span class="copy-msg" id="copy-msg">コピーしました</span>
+                <button class="btn btn-fill" type="button" id="copy-btn">アドレスをコピー</button>
+            </div>
+        </section>
+        <section class="container-lg mt-5 mb-5">
+            <h2 class="h2 mb-3">所在地</h2>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <p>関西大学 高槻キャンパス 〒569-1052 大阪府高槻市霊仙寺町２丁目１−１</p>
+                </div>
+            </div>
+        </section>
+        <section class="container-lg mt-4 mb-6">
+            <h2 class="h2">よくある質問</h2>
+            <div class="vstack g-4 mt-4">
+                <details class="accordion" open>
+                    <summary class="accordion-header">活動時間はいつですか?</summary>
+                    <div class="accordion-body">
+                        平日は5時間目の終了する18時から20時半ごろまで稽古することが多いです。土日祝日は基本的に休みですが、公演本番直前になると稽古頻度が増える場合もあります。自分の予定に合わせた活動が可能です。
+                    </div>
+                </details>
+                <details class="accordion" open>
+                    <summary class="accordion-header">他の活動と両立できますか?</summary>
+                    <div class="accordion-body">
+                        万絵巻は兼部可能なサークルです。自身の予定に合わせた活動も可能なため、他の団体に所属しながら活躍している団員も多くいます。
+                    </div>
+                </details>
+                <details class="accordion" open>
+                    <summary class="accordion-header">演劇ってやったこと無いんですが、初心者でも大丈夫ですか?</summary>
+                    <div class="accordion-body">
+                        万絵巻はほとんどの人が初心者からスタートしています。演劇は日常の経験すべてが糧となります。未経験者には経験者にはない魅力をもっているものです。
+                    </div>
+                </details>
+                <details class="accordion" open>
+                    <summary class="accordion-header">万絵巻には現在何人くらい所属していますか?</summary>
+                    <div class="accordion-body">
+                        現在40名弱のメンバーが所属しています。和気あいあいとした雰囲気で、みんなで協力しながら活動しています。
+                    </div>
+                </details>
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<style>
+    .address-card {
+        border: 3px solid #1a1a1a;
+        padding: 44px 32px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #8a8a8a;
+        margin: 0 0 8px;
+    }
+
+    .address-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+
+    .copy-msg {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #8a8a8a;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .copy-msg.is-visible {
+        opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+        .address-card {
+            padding: 28px 22px;
+        }
+
+        .address-actions {
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+</style>
+
+<script>
+    const mailAddressEl = document.getElementById("mail-address");
+    const copyBtn = document.getElementById("copy-btn");
+    const copyMsg = document.getElementById("copy-msg");
+
+    let hideTimer: ReturnType<typeof setTimeout> | undefined;
+
+    copyBtn?.addEventListener("click", async () => {
+        const mailText = mailAddressEl?.textContent?.trim() ?? "";
+        if (!mailText) return;
+
+        try {
+            await navigator.clipboard.writeText(mailText);
+        } catch (err) {
+            // clipboard APIが使えない環境向けのフォールバック
+            const range = document.createRange();
+            if (mailAddressEl) {
+                range.selectNodeContents(mailAddressEl);
+                const selection = window.getSelection();
+                selection?.removeAllRanges();
+                selection?.addRange(range);
+                document.execCommand("copy");
+                selection?.removeAllRanges();
+            }
+        }
+
+        copyMsg?.classList.add("is-visible");
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => {
+            copyMsg?.classList.remove("is-visible");
+        }, 2000);
+    });
+</script>

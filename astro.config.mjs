@@ -1,14 +1,13 @@
 // @ts-check
-import {defineConfig} from 'astro/config';
+import {defineConfig, passthroughImageService} from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
     site: 'https://yoroweb.com',
     trailingSlash: 'always',
+    image: {
+        service: passthroughImageService()
+    },
     integrations: [sitemap()]
 });
-//todo 2008夏公演ブログの内容あり3チーム分
-//todo 2009 new コンテンツあり
-//todo 2009 summer ブログある
-//todo 2011 夏公演ブログの内容あり3チーム分

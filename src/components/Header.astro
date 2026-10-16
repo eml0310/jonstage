@@ -9,10 +9,7 @@ const path = Astro.url.pathname;
             <Logo width={40} height={40}/>
             劇団万絵巻
         </a>
-        {
-        //<a class="header-news fw-b fs-17" href="/welcome/">〈新団員募集中〉</a>
-        }
-        <div class="header-menu">
+        <div class="header-menu justify-between">
             <ul class="globalmenu">
                 <li class="globalmenu-item">
                     <a class:list={["globalmenu-link", {active: path.startsWith("/performances/")}]}
@@ -27,7 +24,12 @@ const path = Astro.url.pathname;
                        href="/diary/">劇団員日記</a>
                 </li>
                 <li class="globalmenu-item">
-                    <a class="globalmenu-link g-1" href="/welcome/">新入生歓迎特集<i class="aif-new_window"/></a>
+                    <a class:list={["globalmenu-link", {active: path.startsWith("/summer/")}]}
+                       href="/summer/">夏季自主研究発表</a>
+                </li>
+                <li class="globalmenu-item">
+                    <a class:list={["globalmenu-link g-1", {active: path.startsWith("/welcome/")}]}
+                       href="/welcome/">新入生歓迎特集</a>
                 </li>
                 <li class="globalmenu-item">
                     <a class:list={["globalmenu-link", {active: path.startsWith("/contact/")}]}
@@ -43,6 +45,9 @@ const path = Astro.url.pathname;
                 <li class="utilitylink-item">
                     <a rel="external" class="utilitylink" href="https://www.instagram.com/yoroduwemaki">Instagram</a>
                 </li>
+                <li class="utilitylink-item">
+                    <a class="utilitylink" href="">RSS</a>
+                </li>
             </ul>
         </div>
         <div class="header-button">
@@ -56,7 +61,7 @@ const path = Astro.url.pathname;
 <dialog id="header-dialog-menu" class="drawer">
     <div class="drawer-header d-flex justify-end">
         <button class="hamburger-btn" type="button" command="close" commandfor="header-dialog-menu"><i
-                class="hamburger-icon close"></i>
+            class="hamburger-icon close"></i>
             閉じる
         </button>
     </div>
@@ -65,24 +70,26 @@ const path = Astro.url.pathname;
             <li class="mobilemenu-item"><a class="mobilemenu-link" href="/performances/">公演</a></li>
             <li class="mobilemenu-item"><a class="mobilemenu-link" href="/feature/">特集</a></li>
             <li class="mobilemenu-item"><a class="mobilemenu-link" href="/diary/">劇団員日記</a></li>
+            <li class="mobilemenu-item"><a class="mobilemenu-link" href="/summer/">夏季自主研究発表</a></li>
             <li class="mobilemenu-item"><a class="mobilemenu-link" href="/welcome/">新入生歓迎特集</a></li>
             <li class="mobilemenu-item"><a class="mobilemenu-link" href="/contact/">お問い合わせ</a></li>
         </ul>
-        <hr class="divider my-4">
-        <ul class="vstack g-3 px-3">
-            <li class="utilitylink-item"><a rel="external" class="utilitylink" href="https://x.com/Yoroduwemaki">X&nbsp;(旧:Twitter)</a>
+        <hr class="divider mt-3">
+        <ul class="vstack g-3 px-3 mt-4">
+            <li class="utilitylink-item">
+                <a rel="external" class="utilitylink" href="https://x.com/Yoroduwemaki">X&nbsp;(旧:Twitter)</a>
             </li>
-            <li class="utilitylink-item"><a rel="external" class="utilitylink"
-                                            href="https://www.instagram.com/yoroduwemaki">Instagram</a></li>
+            <li class="utilitylink-item">
+                <a rel="external" class="utilitylink"
+                   href="https://www.instagram.com/yoroduwemaki">Instagram</a>
+            </li>
+            <li class="utilitylink-item">
+                <a class="utilitylink" href="">RSS</a>
+            </li>
         </ul>
     </div>
     <div class="drawer-footer"></div>
 </dialog>
 
-<style lang="scss">
-  .header-news {
-    order: 2;
-    display: flex;
-    align-items: center;
-  }
+<style>
 </style>

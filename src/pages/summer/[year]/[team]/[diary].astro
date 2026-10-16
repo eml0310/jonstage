@@ -1,0 +1,139 @@
+---
+const currentUrl = new URL(Astro.url.pathname, Astro.url);
+import { getCollection, getEntry, render } from "astro:content";
+import Layout from "../../../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const diaries = await getCollection("summerDiaries");
+    return diaries.map((entry) => {
+        const [year, team, diary] = entry.id.split("/");
+        return { params: { year, team, diary }, props: { entry } };
+    });
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const [year, team] = entry.id.split("/");
+
+const teamEntry = await getEntry("summerTeams", `${year}/${team}`);
+
+const teamDiaries = (await getCollection("summerDiaries"))
+    .filter((d) => d.id.startsWith(`${year}/${team}/`))
+    .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+
+const currentIndex = teamDiaries.findIndex((d) => d.id === entry.id);
+const prevDiary = currentIndex > 0 ? teamDiaries[currentIndex - 1] : undefined;
+const nextDiary = currentIndex < teamDiaries.length - 1 ? teamDiaries[currentIndex + 1] : undefined;
+
+function diaryHref(d: typeof entry) {
+    const [dYear, dTeam, dSlug] = d.id.split("/");
+    return `/summer/${dYear}/${dTeam}/${dSlug}/`;
+}
+
+function formatDate(date: Date) {
+    return date.toLocaleDateString("ja-JP", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+}
+const dateFormatter = new Intl.DateTimeFormat("ja-JP", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+});
+
+function createDescription(body: string | undefined, title: string, date: Date, maxLength = 160): string {
+    if (!body || typeof body !== 'string') {
+        return `${dateFormatter.format(date)}に公開された、${teamEntry?.data.name}(${year}年夏季自主研究発表チーム)の日記「${title}」です。`;
+    }
+    const plainText = body
+        .replace(/!\[.*?\]\(.*?\)/g, '')
+        .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+        .replace(/[#*`_~>]/g, '')
+        .replace(/<[^>]+>/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    if (plainText.length < 20) {
+        return `${dateFormatter.format(date)}に公開された、${teamEntry?.data.name}(${year}年夏季自主研究発表チーム)の日記「${title}」です。`;
+    }
+
+    return plainText.length > maxLength
+        ? `${plainText.slice(0, maxLength)}…`
+        : plainText;
+}
+
+const description = createDescription(entry.body, entry.data.title, entry.data.date);
+
+import type {BreadcrumbList} from "schema-dts";
+
+const breadcrumb: BreadcrumbList = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        {'@type': 'ListItem', position: 1, name: '劇団万絵巻', item: new URL('/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 2, name: '夏季自主研究発表', item: new URL('/summer/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 3, name: `${year}年`, item: new URL(`/summer/#${year}`, currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 4, name: `${teamEntry?.data.name ?? team}`, item: new URL(`/summer/${year}/${team}/`, currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 5, name: `日記`, item: new URL(`/summer/${year}/${team}/#diary`, currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 6, name: entry.data.title},
+    ],
+}
+---
+<Layout title={`${entry.data.title} - ${teamEntry?.data.name} - ${year}年夏季自主研究発表チーム`} description={description} schema={[breadcrumb]}>
+    <main>
+        <article class="mt-5">
+            <div class="container-md">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a class="breadcrumb-link" href="/">ホーム</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="breadcrumb-link" href="/summer/">夏季自主研究発表</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="breadcrumb-link" href={`/summer/#${year}`}>{year}年</a>
+                    </li>
+                </ol>
+                <ol class="breadcrumb mb-2">
+                    <li class="breadcrumb-item">
+                        <a class="breadcrumb-link" href={`/summer/${year}/${team}/`}>
+                            {teamEntry?.data.name ?? team}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="breadcrumb-link" href={`/summer/${year}/${team}/#diary`}>日記</a>
+                    </li>
+                    <li class="breadcrumb-item">{entry.data.title}</li>
+                </ol>
+                <h1 class="h1 mb-2">{entry.data.title}</h1>
+                <time datetime={entry.data.date.toISOString().split("T")[0]}>
+                    {entry.data.date.toLocaleDateString("ja-JP", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    })}
+                </time>
+            </div>
+            <div class="mt-4 content container-sm">
+                <Content />
+            </div>
+            <div class="container-md mt-5 pb-6">
+                <nav class="page-navigation flex-wrap">
+                    {prevDiary ? (
+                            <a class="page-navigation-item prev vstack g-2" href={diaryHref(prevDiary)}>
+                                <span class="mr-auto text-black fs-14 fw-n">{formatDate(prevDiary.data.date)}</span>
+                                <span class="mr-auto fs-16">{prevDiary.data.title}</span>
+                            </a>
+                    ) : <span class="page-navigation-item-emp"></span>}
+                    {nextDiary ? (
+                            <a class="page-navigation-item next vstack g-2" href={diaryHref(nextDiary)}>
+                                <span class="ml-auto text-black fs-14 fw-n">{formatDate(nextDiary.data.date)}</span>
+                                <span class="ml-auto fs-16">{nextDiary.data.title}</span>
+                            </a>
+                    ) : <span class="page-navigation-item-emp"></span>}
+                </nav>
+            </div>
+        </article>
+    </main>
+</Layout>

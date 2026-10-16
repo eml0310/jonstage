@@ -2,7 +2,7 @@
 name: "Haunted Honey Meets Girl"
 startDate: 2006-12-08
 endDate: 2006-12-10
-category: "2006年度秋公演"
+category: "2006年度卒業公演"
 venue:
   name: "クロスパル高槻"
   address: "大阪府高槻市紺屋町1番2号"

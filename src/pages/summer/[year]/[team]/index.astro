@@ -1,167 +1,177 @@
 ---
-import {getCollection, render} from 'astro:content';
-import {Image} from 'astro:assets';
-import Layout from '../../../../layouts/Layout.astro';
+const currentUrl = new URL(Astro.url.pathname, Astro.url);
+import Layout from "../../../../layouts/Layout.astro";
+import {getCollection, render} from "astro:content";
+import {Image} from "astro:assets";
+import Xlogo from '../../../../assets/x-logo.svg';
+import Instagram from '../../../../assets/instagram.svg';
 
 export async function getStaticPaths() {
-    const teams = await getCollection('summerTeams');
-    return teams.map(team => {
-        const [year, name] = team.id.split('/');
-        return {
-            params: {year, team: name},
-            props: {team},
-        };
+    const teams = await getCollection("summerTeams");
+    return teams.map((entry) => {
+        const [year, team] = entry.id.split("/");
+        return {params: {year, team}, props: {entry}};
     });
 }
 
-const {year, team: teamName} = Astro.params;
-const {team} = Astro.props;
+const {entry} = Astro.props;
+const {Content} = await render(entry);
+const [year, team] = entry.id.split("/");
 
-const diaries = await getCollection('summerDiaries', (entry) => {
-    return entry.id.startsWith(`${year}/${teamName}/`);
-});
+const diaries = (await getCollection("summerDiaries"))
+    .filter(({id}) => id.startsWith(`${year}/${team}/`))
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const sortedDiaries = diaries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+import type {BreadcrumbList} from "schema-dts";
 
-const breadcrumbs = [
-    {name: '夏チーム', item: '/summer/'},
-    {name: team.data.name, item: Astro.url.pathname}
-];
-
-const formatDate = (date: Date) => {
-    return date.toLocaleDateString('ja-JP', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    });
-};
+const breadcrumb: BreadcrumbList = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        {'@type': 'ListItem', position: 1, name: '劇団万絵巻', item: new URL('/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 2, name: '夏季自主研究発表', item: new URL('/summer/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 3, name: `${entry.data.year}年`, item: new URL(`/summer/#${entry.data.year}`, currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 4, name: entry.data.name},
+    ],
+}
 ---
-
-<Layout
-        title={`${team.data.name} - ${year}年夏チーム`}
-        description={`${year}年夏チーム「${team.data.name}」の紹介と活動日記です。`}
-        breadcrumbs={breadcrumbs}
-        noindex={true}
->
-    <main>
-        <section class="container-md mt-5">
-            <ol class="breadcrumb mb-2">
-                <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">ホーム</a></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-link" href="/summer/">夏チーム</a></li>
-                <li class="breadcrumb-item">{team.data.name}</li>
-            </ol>
-            <h1 class="h1">{team.data.name}</h1>
-            <p class="mt-2">{year}年 夏チーム</p>
-        </section>
-
-        <section class="container-md mt-6">
-            <div class="team-header">
-                {team.data.thumbnail && (
-                        <div class="team-header__img">
-                            <Image src={team.data.thumbnail} alt={team.data.name} class="img-fluid"/>
-                        </div>
+<Layout title={`${entry.data.name} - ${entry.data.year}年夏季自主研究発表チーム`} description={`劇団万絵巻${entry.data.year}年夏季自主研究発表チーム「${entry.data.name}」のページです。団員・OB/OG向け公演に向けた日記やSNS情報を掲載しています。(本公演は関係者限定です)`} schema={[breadcrumb]}>
+    <main class="">
+        <article class="mt-5">
+            <div class="container-md">
+                <ol class="breadcrumb mb-2">
+                    <li class="breadcrumb-item">
+                        <a class="breadcrumb-link" href="/">ホーム</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="breadcrumb-link" href="/summer/">夏季自主研究発表</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="breadcrumb-link" href={`/summer/#${entry.data.year}`}>{entry.data.year}年</a>
+                    </li>
+                    <li class="breadcrumb-item">{entry.data.name}</li>
+                </ol>
+                <h1 class="h1">{entry.data.name}</h1>
+                {entry.data.director && (
+                        <p class="mt-2">演出: {entry.data.director}</p>
                 )}
-                <div class="team-header__info mt-4">
-                    <dl class="description-list">
-                        {team.data.director && (
-                                <>
-                                    <dt>演出</dt>
-                                    <dd>{team.data.director}</dd>
-                                </>
-                        )}
-                        <dt>リンク</dt>
-                        <dd>
-                            <div class="hstack g-3">
-                                {team.data.twitter && (
-                                        <a href={team.data.twitter} class="btn btn-outline is-sm" target="_blank"
-                                           rel="noopener noreferrer">X (Twitter)</a>
-                                )}
-                                {team.data.instagram && (
-                                        <a href={team.data.instagram} class="btn btn-outline is-sm" target="_blank"
-                                           rel="noopener noreferrer">Instagram</a>
-                                )}
-                            </div>
-                        </dd>
-                    </dl>
+                <div class="hstack g-3 mt-3">
+                    {entry.data.twitter && (<a class="d-flex" href={entry.data.twitter}>
+                        <Xlogo width={28} height={28}/>
+                    </a>)}
+                    {entry.data.instagram && (<a class="d-flex" href={entry.data.instagram}>
+                        <Instagram width={28} height={28}/>
+                    </a>)}
                 </div>
+                <p class="mt-3 mb-3"><a class="link" href="#diary">日記</a></p>
             </div>
-        </section>
-
-        <section class="container-md mt-8">
-            <h2 class="h2 mb-4">活動日記</h2>
-            {sortedDiaries.length > 0 ? (
-                    <div class="v-stack g-4">
-                        {sortedDiaries.map(diary => (
-                                <article class="diary-card">
-                                    <a href={`/summer/${year}/${teamName}/${diary.id.split('/')[2]}/`} class="diary-card__link">
-                                        <time datetime={diary.data.date.toISOString()}>{formatDate(diary.data.date)}</time>
-                                        <h3 class="h3 diary-card__title">{diary.data.title}</h3>
-                                    </a>
-                                </article>
-                        ))}
-                    </div>
-            ) : (
-                    <p>まだ日記がありません。</p>
+            {entry.data.thumbnail && (
+                    <figure class="image-area container-sm">
+                        <Image
+                                src={entry.data.thumbnail}
+                                alt={entry.data.name}
+                        />
+                    </figure>
             )}
-        </section>
+            <div class="container-md mt-4 mb-6">
+                <h2 id="diary" class="h2 mb-4">日記</h2>
+                <ol class="diary-timeline">
+                    {diaries.map((diary) => {
+                        const diarySlug = diary.id.split("/")[2];
+                        return (
+                                <li class="diary-timeline-item">
+                                    <a class="diary-timeline-link" href={`/summer/${year}/${team}/${diarySlug}/`}>
+                                        <time class="" datetime={diary.data.date.toISOString().split("T")[0]}>
+                                            {diary.data.date.toLocaleDateString("ja-JP", {
+                                                month: "long",
+                                                day: "numeric",
+                                            })}
+                                        </time>
+                                        <span class="">{diary.data.title}</span>
+                                    </a>
+                                </li>
+                        );
+                    })}
+                </ol>
+            </div>
+        </article>
     </main>
 </Layout>
 
-<style lang="scss">
-  .team-header {
-    &__img {
-      max-width: 800px;
-      margin: 0 auto;
-      border: 1px solid #949494;
-
-      img {
+<style>
+    .image-area {
         width: 100%;
         height: auto;
-      }
-    }
-  }
 
-  .description-list {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 1rem;
-    border-top: 1px solid #e0e0e0;
-
-    dt {
-      padding: 1rem 0;
-      font-weight: bold;
-      border-bottom: 1px solid #e0e0e0;
+        img {
+            width: 100%;
+            object-fit: cover;
+            height: auto;
+        }
     }
 
-    dd {
-      padding: 1rem 0;
-      margin: 0;
-      border-bottom: 1px solid #e0e0e0;
-    }
-  }
-
-  .diary-card {
-    border-bottom: 1px solid #e0e0e0;
-
-    &__link {
-      display: block;
-      padding: 1.5rem 0;
-      text-decoration: none;
-      color: inherit;
-      transition: opacity 0.2s;
-
-      &:hover {
-        opacity: 0.7;
-      }
+    .diary-timeline {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
     }
 
-    time {
-      font-size: 0.875rem;
-      color: #666;
+    .diary-timeline-item {
+        position: relative;
+        padding-left: 1.5rem;
     }
 
-    &__title {
-      margin-top: 0.5rem;
+    /* 縦線 */
+    .diary-timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 0.6rem;
+        bottom: -0.5rem;
+        width: 1px;
+        background: var(--bs-border-color, #dee2e6);
     }
-  }
+
+    .diary-timeline-item:last-child::before {
+        display: none;
+    }
+
+    /* 丸ポイント */
+    .diary-timeline-item::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 35%;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+    .diary-timeline-link {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        padding: 0.6rem 0.75rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: inherit;
+        transition: background-color 0.15s ease;
+    }
+
+    .diary-timeline-link:hover {
+        background: var(--bs-light, #f8f9fa);
+    }
+
+    .diary-timeline-date {
+        flex-shrink: 0;
+        width: 5.5em;
+        font-size: 0.85rem;
+        color: var(--bs-secondary, #6c757d);
+    }
+
+    .diary-timeline-title {
+        font-size: 1rem;
+        font-weight: 600;
+    }
 </style>

@@ -1,147 +1,25 @@
 ---
+import type {Thing, Graph} from 'schema-dts';
+
 interface Props {
-    type: 'TheaterGroup' | 'Event' | 'BlogPosting' | 'ItemList';
-    data?: any;
-    breadcrumbs?: Array<{ name: string; item: string }>;
+    schema?: Thing | Thing[];
 }
 
-const {type, data, breadcrumbs = []} = Astro.props;
+const {schema} = Astro.props;
 
-const siteUrl = Astro.site ? Astro.site.origin : 'https://yoroweb.com';
-const theaterGroupId = `${siteUrl}/#theatergroup`;
+const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 
-const theaterGroupSchema = {
-    "@type": "TheaterGroup",
-    "@id": theaterGroupId,
-    "name": "劇団万絵巻",
-    "url": siteUrl,
-    "logo": {
-        "@type": "ImageObject",
-        "url": `${siteUrl}/favicon.svg`
-    },
-    "image": `${siteUrl}/ogp.png`,
-    "description": "関西大学高槻キャンパスで活動している学生劇団で、1994年以来ダンスコメディを始めなんでもありのエンターテイメントを追求しています。",
-    "foundingDate": "1994-04",
-    "foundingLocation": {
-        "@type": "Place",
-        "name": "関西大学高槻キャンパス",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "霊仙寺町2丁目1番1号",
-            "addressLocality": "高槻市",
-            "addressRegion": "大阪府",
-            "postalCode": "569-1095",
-            "addressCountry": "JP"
-        }
-    },
-    "location": {
-        "@type": "Place",
-        "name": "関西大学高槻キャンパス",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "霊仙寺町2丁目1番1号",
-            "addressLocality": "高槻市",
-            "addressRegion": "大阪府",
-            "postalCode": "569-1095",
-            "addressCountry": "JP"
-        }
-    },
-    "parentOrganization": {
-        "@type": "CollegeOrUniversity",
-        "name": "関西大学",
-        "url": "https://www.kansai-u.ac.jp"
-    },
-    "email": "mail@yoroweb.com",
-    "sameAs": [
-        "https://x.com/Yoroduwemaki",
-        "https://www.instagram.com/yoroduwemaki"
-    ]
-};
+const graphData: Graph | undefined = schemas.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@graph': schemas,
+} : undefined;
 
-const breadcrumbSchema = {
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-        {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "劇団万絵巻",
-            "item": siteUrl
-        },
-        ...breadcrumbs.map((bc, index) => ({
-            "@type": "ListItem",
-            "position": index + 2,
-            "name": bc.name,
-            "item": bc.item.startsWith('http') ? bc.item : `${siteUrl}${bc.item}`
-        }))
-    ]
-};
-
-let mainSchema: any = null;
-
-if (type === 'Event') {
-    mainSchema = {
-        "@type": "Event",
-        "name": data.title,
-        "startDate": data.date,
-        "description": data.excerpt,
-        "image": data.image.startsWith('http') ? data.image : `${siteUrl}${data.image}`,
-        "performer": {"@id": theaterGroupId},
-        "publisher": {"@id": theaterGroupId},
-        "location": {
-            "@type": "Place",
-            "name": data.locationName || "関西大学高槻キャンパス",
-            "address": data.address || {
-                "@type": "PostalAddress",
-                "addressLocality": "高槻市",
-                "addressRegion": "大阪府",
-                "addressCountry": "JP"
-            }
-        }
-    };
-    if (data.offers) {
-        mainSchema.offers = {
-            "@type": "Offer",
-            "price": data.offers.price,
-            "priceCurrency": "JPY",
-            "availability": "https://schema.org/InStock",
-            "url": data.offers.url || Astro.url.href
-        };
-    }
-} else if (type === 'BlogPosting') {
-    mainSchema = {
-        "@type": "BlogPosting",
-        "headline": data.title,
-        "datePublished": data.date,
-        "author": {"@id": theaterGroupId},
-        "publisher": {"@id": theaterGroupId},
-        "image": data.image ? (data.image.startsWith('http') ? data.image : `${siteUrl}${data.image}`) : `${siteUrl}/ogp.png`
-    };
-} else if (type === 'ItemList') {
-    mainSchema = {
-        "@type": "ItemList",
-        "itemListElement": data.items.map((item: any, index: number) => ({
-            "@type": "ListItem",
-            "position": index + 1,
-            "url": item.url.startsWith('http') ? item.url : `${siteUrl}${item.url}`
-        }))
-    };
+function safeJsonLd(data: unknown): string {
+    return JSON.stringify(data)
+        .replace(/</g, '\\u003C')
+        .replace(/>/g, '\\u003E')
+        .replace(/&/g, '\\u0026')
+        .replace(/'/g, '\\u0027');
 }
-
-const graph = [
-    theaterGroupSchema,
-    breadcrumbSchema
-];
-
-if (mainSchema) {
-    graph.push(mainSchema);
-}
-
-const schema = {
-    "@context": "https://schema.org",
-    "@graph": graph
-};
-
-const jsonLd = JSON.stringify(schema);
 ---
-
-<script type="application/ld+json" set:html={jsonLd}/>
+{graphData && <script is:inline type="application/ld+json" set:html={safeJsonLd(graphData)}/>}

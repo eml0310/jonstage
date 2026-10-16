@@ -1,5 +1,5 @@
 ---
-name: "海鮮MIK'sマフィア"
+name: "スッキリ！の極みアドベンチャーズ"
 year: 2023
 director: "アドニス・ハヤト"
 twitter: "https://x.com/adventures_skr"

@@ -2,7 +2,8 @@
 import {getCollection, render, type CollectionEntry} from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import {Image} from 'astro:assets';
-import ogpImage from '../../assets/ogp.avif';
+import type {BreadcrumbList, TheaterEvent} from "schema-dts";
+const currentUrl = new URL(Astro.url.pathname, Astro.url);
 
 export async function getStaticPaths() {
     const performances = await getCollection('performances');
@@ -22,45 +23,131 @@ export async function getStaticPaths() {
 const {performance, prevPerformance, nextPerformance} = Astro.props;
 const {Content} = await render(performance);
 
-const displayImage = performance.data.thumbnail ?? performance.data.flyer?.front ?? ogpImage;
-
-const performanceData = {
-    name: performance.data.name,
-    startDate: new Date(performance.data.startDate).toISOString(),
-    excerpt: performance.data.excerpt,
-    image: displayImage.src,
-    director: performance.data.director,
-    offers: performance.data.offers?.map(offer => ({
-        price: offer.price,
-        priceCurrency: 'JPY'
-    }))
+const cleanString = (val?: string): string | undefined => {
+    const trimmed = val?.trim();
+    return trimmed && trimmed.length > 0 ? trimmed : undefined;
 };
 
-const breadcrumbs = [
-    {name: '公演', item: '/performances/'},
-    {name: performance.data.name, item: Astro.url.pathname}
-];
----
+const playwright = cleanString(performance.data.playwright);
+const director = cleanString(performance.data.director);
+const excerpt = cleanString(performance.data.excerpt);
+const venueName = cleanString(performance.data.venue?.name);
+const venueAddress = cleanString(performance.data.venue?.address);
 
-<Layout
-        title={performance.data.name + " - 公演"}
-        description={performance.data.excerpt}
-        image={displayImage.src}
-        type="article"
-        schemaType="Event"
-        schemaData={performanceData}
-        breadcrumbs={breadcrumbs}
->
+const year = new Date(performance.data.startDate).getFullYear();
+const breadcrumb: BreadcrumbList = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        {'@type': 'ListItem', position: 1, name: '劇団万絵巻', item: new URL('/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 2, name: '公演', item: new URL('/performances/', currentUrl.origin).toString()},
+        {
+            '@type': 'ListItem',
+            position: 3,
+            name: `${String(year)}年`,
+            item: new URL(`/performances/#${year}`, currentUrl.origin).toString()
+        },
+        {'@type': 'ListItem', position: 4, name: performance.data.name},
+    ],
+};
+
+const startDate = new Date(performance.data.startDate).toISOString().split('T')[0];
+const formattedEndDate = performance.data.endDate
+    ? new Date(performance.data.endDate).toISOString().split('T')[0]
+    : undefined;
+const endDate = formattedEndDate && formattedEndDate !== startDate
+    ? formattedEndDate
+    : undefined;
+
+const images = [...new Set([
+    performance.data.flyer?.front?.src,
+    performance.data.flyer?.back?.src,
+    performance.data.thumbnail?.src,
+].filter((src): src is string => Boolean(src)))]
+.map(src => new URL(src, currentUrl.origin).toString());
+
+const description = excerpt || `${year}年に上演された劇団万絵巻の公演「${performance.data.name}」の公演情報です。`;
+
+const location = venueName ? {
+    '@type': 'Place' as const,
+    name: venueName,
+    ...(venueAddress ? {
+        address: {
+            '@type': 'PostalAddress' as const,
+            name: venueAddress,
+            addressCountry: 'JP' as const,
+        },
+    } : {}),
+} : undefined;
+
+const directorPerson = director ? {
+    '@type': 'Person' as const,
+    name: director,
+} : undefined;
+
+const workPerformed = playwright ? {
+    '@type': 'Play' as const,
+    name: performance.data.name,
+    author: {
+        '@type': 'Person' as const,
+        name: playwright,
+    },
+} : undefined;
+
+const hasOffers = performance.data.offers && performance.data.offers.length > 0;
+const isFree = hasOffers && performance.data.offers!.every(offer => offer.price === 0);
+
+const offers = hasOffers ? performance.data.offers!.map(offer => ({
+    '@type': 'Offer' as const,
+    name: offer.label,
+    price: offer.price,
+    priceCurrency: 'JPY',
+    url: currentUrl.toString(),
+})) : undefined;
+
+const theaterEvent: TheaterEvent = {
+    '@type': 'TheaterEvent',
+    '@id': `${currentUrl.toString()}#theaterevent`,
+    url: currentUrl.toString(),
+    mainEntityOfPage: currentUrl.toString(),
+    name: performance.data.name,
+    description: description,
+    startDate: startDate,
+    ...(endDate ? { endDate } : {}),
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    inLanguage: 'ja',
+    ...(location ? { location } : {}),
+    ...(images.length > 0 ? {
+        image: images.length === 1 ? images[0] : images,
+    } : {}),
+    performer: {
+        '@type': 'TheaterGroup',
+        '@id': 'https://yoroweb.com/#theatergroup',
+        name: '劇団万絵巻',
+    },
+    organizer: {
+        '@type': 'TheaterGroup',
+        '@id': 'https://yoroweb.com/#theatergroup',
+        name: '劇団万絵巻',
+        url: 'https://yoroweb.com/',
+    },
+    ...(directorPerson ? { director: directorPerson } : {}),
+    ...(workPerformed ? { workPerformed } : {}),
+    ...(offers ? { offers } : {}),
+    ...(isFree ? { isAccessibleForFree: true } : {}),
+};
+---
+<Layout title={`${performance.data.name} - 公演`} description={description} schema={[breadcrumb, theaterEvent]}>
     <main>
         <article>
-            <header class="container-md mt-5">
+            <header class="container-lg mt-5">
                 <ol class="breadcrumb mb-2">
                     <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">ホーム</a></li>
                     <li class="breadcrumb-item"><a class="breadcrumb-link" href="/performances/">公演</a></li>
                     <li class="breadcrumb-item">{performance.data.name}</li>
                 </ol>
                 <h1 class="h1 mb-2">{performance.data.name}</h1>
-                <time datetime={new Date(performance.data.startDate).toISOString().split('T')[0]} class="">
+                <time datetime={new Date(performance.data.startDate).toISOString().split('T')[0]}>
                     {new Date(performance.data.startDate).toLocaleDateString('ja-JP', {
                         year: 'numeric',
                         month: 'long',
@@ -71,60 +158,60 @@ const breadcrumbs = [
                     <dt class="mr-2">作:</dt>
                     <dd class="mr-4">{performance.data.playwright}</dd>
                     <dt class="mr-2">演出:</dt>
-                    <dd class="">{performance.data.director}</dd>
+                    <dd>{performance.data.director}</dd>
                 </dl>
             </header>
             <div class="container-lg custom-performances-area mt-4">
                 <div class="custom-performances-img">
                     {performance.data.flyer?.front && (
-                            <Image
-                                    src={performance.data.flyer.front}
-                                    alt={`${performance.data.name} フライヤー表`}
-                                    class="img-fluid"
-                            />
+                        <Image
+                            src={performance.data.flyer.front}
+                            alt={`${performance.data.name} フライヤー表`}
+                            class="img-fluid"
+                        />
                     )}
                     {performance.data.flyer?.back && (
-                            <Image
-                                    src={performance.data.flyer.back}
-                                    alt={`${performance.data.name} フライヤー裏`}
-                                    class="img-fluid mt-3"
-                            />
+                        <Image
+                            src={performance.data.flyer.back}
+                            alt={`${performance.data.name} フライヤー裏`}
+                            class="img-fluid mt-3"
+                        />
                     )}
                     {!performance.data.flyer && performance.data.thumbnail && (
-                            <Image
-                                    src={performance.data.thumbnail}
-                                    alt={performance.data.name}
-                                    class="img-fluid"
-                            />
+                        <Image
+                            src={performance.data.thumbnail}
+                            alt={performance.data.name}
+                            class="img-fluid"
+                        />
                     )}
                 </div>
                 <div class="content custom-performances-content">
                     <Content/>
                 </div>
             </div>
-            <footer class="container-md mt-5 pb-6">
+            <footer class="container-lg mt-5 pb-6">
                 <nav class="page-navigation flex-wrap">
                     {prevPerformance ? (
-                            <a class="page-navigation-item prev vstack g-2"
-                               href={`/performances/${prevPerformance.id}/`}>
-                                <span class="mr-auto text-black fs-14 fw-n">{prevPerformance.data.category}</span>
-                                <span class="mr-auto fs-16">{prevPerformance.data.name}</span>
-                            </a>
+                        <a class="page-navigation-item prev vstack g-2"
+                           href={`/performances/${prevPerformance.id}/`}>
+                            <span class="mr-auto text-black fs-14 fw-n">{prevPerformance.data.category}</span>
+                            <span class="mr-auto fs-16">{prevPerformance.data.name}</span>
+                        </a>
                     ) : (
-                            <span class="page-navigation-item-emp"></span>
+                        <span class="page-navigation-item-emp"></span>
                     )}
                     <a class="page-navigation-item"
                        href={`/performances/#${performance.data.startDate.getFullYear()}`}>
                         {performance.data.startDate.getFullYear()}年の公演一覧
                     </a>
                     {nextPerformance ? (
-                            <a class="page-navigation-item next vstack g-2"
-                               href={`/performances/${nextPerformance.id}/`}>
-                                <span class="ml-auto text-black fs-14 fw-n">{nextPerformance.data.category}</span>
-                                <span class="ml-auto fs-16">{nextPerformance.data.name}</span>
-                            </a>
+                        <a class="page-navigation-item next vstack g-2"
+                           href={`/performances/${nextPerformance.id}/`}>
+                            <span class="ml-auto text-black fs-14 fw-n">{nextPerformance.data.category}</span>
+                            <span class="ml-auto fs-16">{nextPerformance.data.name}</span>
+                        </a>
                     ) : (
-                            <span class="page-navigation-item-emp"></span>
+                        <span class="page-navigation-item-emp"></span>
                     )}
                 </nav>
             </footer>
@@ -132,28 +219,32 @@ const breadcrumbs = [
     </main>
 </Layout>
 
-<style lang="scss">
-  .custom-performances-area {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    gap: 2.5rem;
-    grid-template-areas:"img""content";
-  }
-
-  @media screen and (min-width: 768px) {
+<style>
     .custom-performances-area {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr;
-      gap: 2.5rem;
-      grid-template-areas: "content img";
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 2.5rem;
+        grid-template-areas: "img" "content";
     }
-    .custom-performances-img {
-      grid-area: img;
+
+    @media screen and (min-width: 768px) {
+        .custom-performances-area {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+            gap: 2.5rem;
+            grid-template-areas: "content img";
+            align-items: start;
+        }
+
+        .custom-performances-img {
+            grid-area: img;
+            position: sticky;
+            top: 0;
+        }
+
+        .custom-performances-content {
+            grid-area: content;
+        }
     }
-    .custom-performances-content {
-      grid-area: content;
-    }
-  }
 </style>

@@ -1,34 +1,88 @@
 ---
+import pkg from '../../package.json';
+const rawRepoUrl = typeof pkg.repository === 'string' ? pkg.repository : pkg.repository?.url;
+const repoUrl = rawRepoUrl
+    ? rawRepoUrl.replace(/^git\+/, '').replace(/\.git$/, '')
+    : '#';
+// SVG
 import Logo from '../assets/logo.svg';
-import instagram from "../assets/instagram.avif";
-import xLogo from "../assets/x-logo.avif";
-import {Image} from 'astro:assets';
----
+import FeedIcon from "../assets/feed-icon.svg"
+import Xlogo from '../assets/x-logo.svg';
+import Instagram from '../assets/instagram.svg';
 
-<footer class="mt-6 mb-7">
-    <div class="container-sm">
-        <div class="hstack align-items-center g-3 justify-center">
-            <Logo width={64} height={64}/>
-            <p class="h2">劇団万絵巻</p>
+// Build time
+const buildDate = new Date();
+const buildDateJST = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Asia/Tokyo',
+    dateStyle: 'short',
+    timeStyle: 'short',
+}).format(buildDate);
+const isDev = import.meta.env.DEV;
+---
+<footer class="mb-7 c-footer">
+    <div class="container-lg pt-5">
+        <div class="c-logo">
+            <div class="c-grid">
+                <div class="hstack align-items-center g-2">
+                    <Logo width={48} height={48}/>
+                    <p class="h2">劇団万絵巻</p>
+                </div>
+                <div class="hstack align-items-center g-4">
+                    <a class="d-flex" href="https://x.com/Yoroduwemaki" rel="external">
+                        <Xlogo width={28} height={28}/>
+                    </a>
+                    <a class="d-flex" href="https://www.instagram.com/yoroduwemaki" rel="external">
+                        <Instagram width={28} height={28}/>
+                    </a>
+                    <a class="d-flex" href="">
+                        <FeedIcon width={28} height={28}/>
+                    </a>
+                </div>
+            </div>
+            <p class="fs-14 mt-3 text-grey-600">Made by Hiroshi ISOBE &middot; Built with <a class="c-link" href={repoUrl}>JonStage</a>{' '}{isDev ? (<>in development mode</>) : (<>&middot; <time datetime={buildDate.toISOString()}>{buildDateJST} JST</time></>)}</p>
         </div>
-        <ul class="mt-4 utilitylink-units justify-center">
+        <ul class="mt-5 utilitylink-units flex-wrap">
             <li><a href="/performances/" class="utilitylink">公演</a></li>
             <li><a href="/feature/" class="utilitylink">特集</a></li>
             <li><a href="/diary/" class="utilitylink">劇団員日記</a></li>
+            <li><a href="/summer/" class="utilitylink">夏季自主研究発表</a></li>
+            <li><a href="/diary/" class="utilitylink">新入生歓迎特集</a></li>
             <li><a href="/contact/" class="utilitylink">お問い合わせ</a></li>
         </ul>
-        <div class="hstack g-4 mt-4 justify-center">
-            <a href="https://www.instagram.com/yoroduwemaki" rel="external">
-                <Image width="40" height="40" class="" src={instagram} alt="Instagramのロゴ"/>
-            </a>
-            <a href="https://x.com/Yoroduwemaki" rel="external">
-                <Image width="40" height="40" class="" src={xLogo} alt="Xのロゴ"/>
-            </a>
-        </div>
     </div>
-    <div class="container-lg mt-5">
-        <p class="text-right">
-            &copy; 1994-{new Date().getFullYear()} Yoroduwemaki. All rights reserved.
-        </p>
+    <div class="container-lg mt-6">
+        <p class="text-right">&copy; 1994-{new Date().getFullYear()} Yoroduwemaki. All rights reserved.</p>
     </div>
 </footer>
+
+<style>
+    .c-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    @media screen and (min-width: 768px) {
+        .c-grid {
+            flex-direction: row;
+            align-items: center;
+            gap: 2.5rem;
+        }
+    }
+
+
+    .c-footer {
+        border-top: 1px solid #949494;
+    }
+
+    .c-logo {
+        padding-right: 24px;
+        padding-bottom: 1rem;
+        width: fit-content;
+        border-bottom: 1px solid #949494;
+    }
+    .c-link {
+        text-decoration: underline;
+    }
+</style>
