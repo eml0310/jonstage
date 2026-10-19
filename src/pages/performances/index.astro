@@ -124,9 +124,9 @@ const collectionPage: CollectionPage = {
             </div>
         </nav>
         {years.map((year: number) => (
-            <section class="mt-6 year-section" id={year.toString()}>
+            <section class="mt-6 year-section" data-year={year}>
                 <div class="year-area container-lg">
-                    <h2 class="year-box h2 py-2" data-year={year}>{year}年</h2>
+                    <h2 class="year-box h2 py-2" id={year.toString()} data-year={year}>{year}年</h2>
                 </div>
                 <div class="container-lg mt-5 vstack">
                     {performancesByYear[year].map((performance: CollectionEntry<'performances'>) => (
@@ -174,33 +174,64 @@ const collectionPage: CollectionPage = {
 </Layout>
 
 <script>
+    const navLinks = document.querySelectorAll<HTMLAnchorElement>('.year-nav a[data-year]');
     const sections = document.querySelectorAll<HTMLElement>('.year-section');
-    const links = document.querySelectorAll<HTMLAnchorElement>('.badge.badge-outline');
 
-    const setActive = (id: string) => {
-        links.forEach(link => {
-            link.classList.toggle('badge-fill', link.dataset.year === id);
-        });
-        const activeLink = document.querySelector<HTMLAnchorElement>(`.badge.badge-outline[data-year="${id}"]`);
-        activeLink?.scrollIntoView({block: 'nearest', inline: 'center'});
-    };
+    if (navLinks.length && sections.length) {
+        let activeYear = '';
 
-    const observer = new IntersectionObserver(
-        entries => {
-            for (const entry of entries) {
-                if (entry.isIntersecting) {
-                    setActive(entry.target.id);
-                    break;
+        const setActive = (year: string) => {
+            if (year === activeYear) return;
+            activeYear = year;
+
+            navLinks.forEach((link) => {
+                const isActive = link.dataset.year === year;
+                link.classList.toggle('badge-fill', isActive);
+                if (isActive) {
+                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                 }
-            }
-        },
-        {rootMargin: '-10% 0px -80% 0px', threshold: 0}
-    );
+            });
+        };
 
-    sections.forEach(section => observer.observe(section));
+        const visibleSections = new Set<HTMLElement>();
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    const el = entry.target as HTMLElement;
+                    if (entry.isIntersecting) {
+                        visibleSections.add(el);
+                    } else {
+                        visibleSections.delete(el);
+                    }
+                }
+
+                for (const section of sections) {
+                    if (visibleSections.has(section)) {
+                        const year = section.dataset.year ?? section.querySelector('h2[id]')?.id;
+                        if (year) {
+                            setActive(year);
+                            break;
+                        }
+                    }
+                }
+            },
+            {
+                rootMargin: '-80px 0px -20% 0px',
+                threshold: 0,
+            }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+    }
 </script>
 
 <style>
+    @media (prefers-reduced-motion: no-preference) {
+        :global(html) {
+            scroll-behavior: smooth;
+        }
+    }
     .year-area {
         position: relative;
     }
@@ -245,6 +276,7 @@ const collectionPage: CollectionPage = {
         min-width: 100%;
     }
 
+    .year-box,
     .year-section {
         scroll-margin-top: 4.5rem;
     }
@@ -295,6 +327,7 @@ const collectionPage: CollectionPage = {
     }
 
     @media screen and (min-width: 768px) {
+        .year-box,
         .year-section {
             scroll-margin-top: 6rem;
         }

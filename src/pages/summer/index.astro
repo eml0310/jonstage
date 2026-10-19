@@ -32,18 +32,20 @@ const breadcrumb: BreadcrumbList = {
                 </ol>
                 <h1 class="container-lg h1">夏季自主研究発表</h1>
                 <p class="container-lg mt-3 fs-20">劇団万絵巻の団員およびOB・OG・関係者を対象とした「夏季自主研究発表」のアーカイブです。各チームの情報や日記を公開しています。（※本公演は関係者限定での上演となり、一般公開は行っておりません。）</p>
-                <nav class="container-lg mt-4">
-                    <ul class="d-flex g-2">
-                        {years.map((year) => (
-                            <li>
-                                <a class="badge badge-outline" href={`#${year}`}>{year}</a>
+            </section>
+            <nav class="year-nav container-lg px-0">
+                <div class="year-nav__inner">
+                    <ul class="year-nav__list" id="year-nav-list">
+                        {years.map((year: number) => (
+                            <li class="year-nav__item">
+                                <a class="badge badge-outline" href={`#${year}`} data-year={year}>{year}</a>
                             </li>
                         ))}
                     </ul>
-                </nav>
-            </section>
+                </div>
+            </nav>
             {years.map((year) => (
-                <section class="container-lg mt-7 mb-6">
+                <section class="container-lg year-section mt-7 mb-6" data-year={year}>
                     <h2 class="h2 mb-4" id={String(year)}>{year}年</h2>
                     <div class="team-card-area">
                         {teamsByYear[year]?.map((team) => (
@@ -57,8 +59,8 @@ const breadcrumb: BreadcrumbList = {
                                     {team.data.director && <div class="mt-1"><span>演出: {team.data.director}</span></div>}
                                 </div>
                                 <div class="team-card-footer">
-                                    {team.data.twitter && <a class="d-flex" href={team.data.twitter} rel="external"><Xlogo width={28} height={28}/></a>}
-                                    {team.data.instagram && <a class="d-flex" href={team.data.instagram} rel="external"><Instagram width={28} height={28}/></a>}
+                                    {team.data.twitter && <a class="d-flex" href={team.data.twitter} rel="external" aria-label="X (旧Twitter)"><Xlogo width={28} height={28}/></a>}
+                                    {team.data.instagram && <a class="d-flex" href={team.data.instagram} rel="external" aria-label="Instagram"><Instagram width={28} height={28}/></a>}
                                     <a class="btn is-sm btn-fill mr-0 ml-auto" href={`/summer/${team.id}/`}>チームページへ</a>
                                 </div>
                             </article>
@@ -70,28 +72,119 @@ const breadcrumb: BreadcrumbList = {
     </main>
 </Layout>
 
+<script>
+    const navLinks = document.querySelectorAll<HTMLAnchorElement>('.year-nav a[data-year]');
+    const sections = document.querySelectorAll<HTMLElement>('.year-section');
+
+    if (navLinks.length && sections.length) {
+        let activeYear = '';
+
+        const setActive = (year: string) => {
+            if (year === activeYear) return;
+            activeYear = year;
+
+            navLinks.forEach((link) => {
+                const isActive = link.dataset.year === year;
+                link.classList.toggle('badge-fill', isActive);
+                if (isActive) {
+                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            });
+        };
+
+        const visibleSections = new Set<HTMLElement>();
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    const el = entry.target as HTMLElement;
+                    if (entry.isIntersecting) {
+                        visibleSections.add(el);
+                    } else {
+                        visibleSections.delete(el);
+                    }
+                }
+
+                for (const section of sections) {
+                    if (visibleSections.has(section)) {
+                        const year = section.dataset.year ?? section.querySelector('h2[id]')?.id;
+                        if (year) {
+                            setActive(year);
+                            break;
+                        }
+                    }
+                }
+            },
+            {
+                rootMargin: '-80px 0px -20% 0px',
+                threshold: 0,
+            }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+    }
+</script>
+
 <style>
+    @media (prefers-reduced-motion: no-preference) {
+        :global(html) {
+            scroll-behavior: smooth;
+        }
+    }
+    .year-nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 255, 255, .92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px dashed #e0e0e0;
+        margin-top: 1rem;
+    }
+
+    .year-nav__inner {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+
+    .year-nav__list {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: .5rem;
+        list-style: none;
+        margin: 0;
+        padding: .625rem 1rem;
+        width: max-content;
+        min-width: 100%;
+    }
+
+    .year-section h2,
+    .year-section {
+        scroll-margin-top: 4.5rem;
+    }
+
     .team-card-content-label {
         padding: 1rem 0 0 0;
         display: block;
     }
+
     .team-card-area {
-        display: flex;
-        gap: 2.5rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .team-card {
-        width: 400px;
-        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
         border-radius: 1rem;
-    }
-    .team-card-content {
-        padding: 0 24px 16px 24px;
-        border-right: 1px solid #949494;
-        border-left: 1px solid #949494;
     }
 
     .team-card-image {
+        margin: 0;
+        width: 100%;
+
         img {
             border-top: 1px solid #949494;
             border-right: 1px solid #949494;
@@ -103,36 +196,50 @@ const breadcrumb: BreadcrumbList = {
             height: auto;
             aspect-ratio: 16/9;
             object-fit: cover;
+            display: block;
         }
+    }
+
+    .team-card-content {
+        flex: 1;
+        padding: 0 1.25rem 1rem 1.25rem;
+        border-right: 1px solid #949494;
+        border-left: 1px solid #949494;
+        word-break: break-word;
     }
 
     .team-card-footer {
         display: flex;
         align-items: center;
-        gap: 16px;
-        padding: 16px 24px 16px 24px;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
         border-top: 1px solid #949494;
         border-bottom: 1px solid #949494;
         border-right: 1px solid #949494;
         border-left: 1px solid #949494;
         border-bottom-right-radius: 1rem;
         border-bottom-left-radius: 1rem;
+        flex-wrap: wrap;
     }
 
-    .dark-image {
-        height: calc(100dvh - 320px);
-        object-fit: cover;
+    @media screen and (min-width: 640px) {
+        .team-card-area {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
     }
 
-    .summer-hero {
-        position: relative;
+    @media screen and (min-width: 768px) {
+        .year-section h2,
+        .year-section {
+            scroll-margin-top: 6rem;
+        }
+    }
 
-        div {
-            width: 100%;
-            text-align: center;
-            position: absolute;
-            top: 25%;
-            text-shadow: 0 2px 8px #000000b3, 0 0 40px #0006;
+    @media screen and (min-width: 1024px) {
+        .team-card-area {
+            grid-template-columns: repeat(auto-fill, minmax(340px, 400px));
+            gap: 2.5rem;
         }
     }
 </style>
