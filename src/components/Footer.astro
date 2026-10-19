@@ -27,7 +27,7 @@ const isDev = import.meta.env.DEV;
                     <Logo width={48} height={48}/>
                     <p class="h2">劇団万絵巻</p>
                 </div>
-                <div class="hstack align-items-center g-4">
+                <div class="hstack align-items-center g-4 mr-0 ml-auto mr-sm-0 ml-sm-0">
                     <a class="d-flex" href="https://x.com/Yoroduwemaki" rel="external">
                         <Xlogo width={28} height={28}/>
                     </a>
@@ -39,7 +39,7 @@ const isDev = import.meta.env.DEV;
                     </a>
                 </div>
             </div>
-            <p class="fs-14 mt-3 text-grey-600">Made by Hiroshi ISOBE &middot; Built with <a class="c-link" href={repoUrl}>JonStage</a>{' '}{isDev ? (<>in development mode</>) : (<>&middot; <time datetime={buildDate.toISOString()}>{buildDateJST} JST</time></>)}</p>
+            <p class="fs-14 mt-3 text-grey-600">Made by Hiroshi ISOBE &middot; <br class="sp-only">Built with <a class="c-link" href={repoUrl}>JonStage</a>{' '}{isDev ? (<>in development mode</>) : (<>&middot; <time datetime={buildDate.toISOString()}>{buildDateJST} JST</time></>)}</p>
         </div>
         <ul class="mt-5 utilitylink-units flex-wrap">
             <li><a href="/performances/" class="utilitylink">公演</a></li>
@@ -51,7 +51,7 @@ const isDev = import.meta.env.DEV;
         </ul>
     </div>
     <div class="container-lg mt-6">
-        <p class="text-right">&copy; 1994-{new Date().getFullYear()} Yoroduwemaki. All rights reserved.</p>
+        <p class="text-right">&copy; 1994-{new Date().getFullYear()} Yoroduwemaki. <br class="sp-only">All rights reserved.</p>
     </div>
 </footer>
 
@@ -71,17 +71,28 @@ const isDev = import.meta.env.DEV;
         }
     }
 
+    @media screen and (min-width: 550px) {
+        .sp-only {
+            display: none;
+        }
+    }
 
     .c-footer {
         border-top: 1px solid #949494;
     }
 
     .c-logo {
-        padding-right: 24px;
         padding-bottom: 1rem;
-        width: fit-content;
         border-bottom: 1px solid #949494;
     }
+
+    @media screen and (min-width: 768px) {
+        .c-logo {
+            width: fit-content;
+            padding-right: 24px;
+        }
+    }
+
     .c-link {
         text-decoration: underline;
     }
