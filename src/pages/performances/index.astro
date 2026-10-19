@@ -188,7 +188,7 @@ const collectionPage: CollectionPage = {
                 const isActive = link.dataset.year === year;
                 link.classList.toggle('badge-fill', isActive);
                 if (isActive) {
-                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    link.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
                 }
             });
         };
@@ -227,11 +227,6 @@ const collectionPage: CollectionPage = {
 </script>
 
 <style>
-    @media (prefers-reduced-motion: no-preference) {
-        :global(html) {
-            scroll-behavior: smooth;
-        }
-    }
     .year-area {
         position: relative;
     }
