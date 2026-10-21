@@ -10,14 +10,28 @@ export async function getStaticPaths() {
     const sorted = performances.sort((a: CollectionEntry<'performances'>, b: CollectionEntry<'performances'>) =>
         new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime()
     );
-    return sorted.map((performance: CollectionEntry<'performances'>, index: number) => ({
-        params: {slug: performance.id},
-        props: {
-            performance,
-            prevPerformance: sorted[index + 1] ?? null,
-            nextPerformance: sorted[index - 1] ?? null,
-        },
-    }));
+    const visiblePerformances = sorted.filter(p => !p.data.noindex);
+
+    return sorted.map((performance: CollectionEntry<'performances'>) => {
+        const visibleIndex = visiblePerformances.findIndex(p => p.id === performance.id);
+        const prevPerformance = visibleIndex !== -1 && visibleIndex < visiblePerformances.length - 1
+            ? visiblePerformances[visibleIndex + 1]
+            : null;
+        const nextPerformance = visibleIndex !== -1 && visibleIndex > 0
+            ? visiblePerformances[visibleIndex - 1]
+            : null;
+
+        const slug = performance.data.overview ? `${performance.id}/overview/` : performance.id;
+
+        return {
+            params: { slug },
+            props: {
+                performance,
+                prevPerformance,
+                nextPerformance,
+            },
+        };
+    });
 }
 
 const {performance, prevPerformance, nextPerformance} = Astro.props;
@@ -137,13 +151,14 @@ const theaterEvent: TheaterEvent = {
     ...(isFree ? { isAccessibleForFree: true } : {}),
 };
 ---
-<Layout title={`${performance.data.name} - 公演`} description={description} schema={[breadcrumb, theaterEvent]}>
+<Layout title={`${performance.data.name} - 公演`} description={description} noindex={performance.data.noindex} schema={[breadcrumb, theaterEvent]}>
     <main>
         <article>
             <header class="container-lg mt-5">
                 <ol class="breadcrumb mb-2">
                     <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">ホーム</a></li>
                     <li class="breadcrumb-item"><a class="breadcrumb-link" href="/performances/">公演</a></li>
+                    <li class="breadcrumb-item"><a class="breadcrumb-link" href={`/performances/#${performance.data.startDate.getFullYear()}`}>{performance.data.startDate.getFullYear()}年</a></li>
                     <li class="breadcrumb-item">{performance.data.name}</li>
                 </ol>
                 <h1 class="h1 mb-2">{performance.data.name}</h1>
@@ -160,6 +175,14 @@ const theaterEvent: TheaterEvent = {
                     <dt class="mr-2">演出:</dt>
                     <dd>{performance.data.director}</dd>
                 </dl>
+                {performance.data.overview && (
+                    <div class="special-site-banner mt-4">
+                        <a class="btn btn-fill is-sm special-site-btn" href={`/performances/${performance.id}/`}>
+                            <span>公演特設サイトへ</span>
+                            <span class="special-site-arrow" aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                )}
             </header>
             <div class="container-lg custom-performances-area mt-4">
                 <div class="custom-performances-img">
@@ -220,6 +243,22 @@ const theaterEvent: TheaterEvent = {
 </Layout>
 
 <style>
+    /* 特設サイトリンク（必要に応じてスタイル調整可能） */
+    .special-site-banner {
+        margin-top: 1.25rem;
+    }
+
+    .special-site-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .special-site-arrow {
+        font-size: 1.1em;
+        line-height: 1;
+    }
+
     .custom-performances-area {
         display: grid;
         grid-template-columns: 1fr;

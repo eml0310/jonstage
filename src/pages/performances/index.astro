@@ -7,8 +7,9 @@ import type {BreadcrumbList, CollectionPage, ItemList} from "schema-dts";
 const currentUrl = new URL(Astro.url.pathname, Astro.url);
 
 const allPerformances = await getCollection('performances');
+const visiblePerformances = allPerformances.filter((p: CollectionEntry<'performances'>) => !p.data.noindex);
 
-const sortedPerformances = allPerformances.sort((a: CollectionEntry<'performances'>, b: CollectionEntry<'performances'>) => {
+const sortedPerformances = visiblePerformances.sort((a: CollectionEntry<'performances'>, b: CollectionEntry<'performances'>) => {
     return new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime();
 });
 

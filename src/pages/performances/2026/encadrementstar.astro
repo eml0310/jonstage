@@ -1,59 +1,266 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import {Image} from "astro:assets";
+
+// Import images
+import Logo from "../../../assets/logo.svg";
+import background from '../../../assets/performances/2026/encadrementstar/background.png';
+import gakuTop from '../../../assets/performances/2026/encadrementstar/gaku-top.png';
+import gakuLeft from '../../../assets/performances/2026/encadrementstar/gaku-left.png';
+import gakuRight from '../../../assets/performances/2026/encadrementstar/gaku-right.png';
+import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
 ---
-<Layout title={`Coming Soon - 公演`} description="" noindex>
-    <main>
+<BaseLayout title={`アンカードルモンスター - 公演`} description={``} noindex>
+    <header class="m_header bg-grey-900 text-white">
+        <nav class="m_header_area">
+            <a class="m_logo h5 bg-white text-grey-900" href="/">
+                <Logo width={32} height={32}/>
+                劇団万絵巻
+            </a>
+            <p class="fs-18">2026年度 卒業公演</p>
+            <a class="m_header_ticket" href="https://yorodu.corich.co/2026sotu/reserve">チケット予約 ↗</a>
+        </nav>
+    </header>
+    <main class="bg-grey-900 text-white">
         <article>
-            <header class="container-lg mt-5">
-                <ol class="breadcrumb mb-2">
-                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">ホーム</a></li>
-                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="/performances/">公演</a></li>
-                    <li class="breadcrumb-item">Coming Soon</li>
-                </ol>
-                <h1 class="h1 mb-2">Coming Soon</h1>
-            </header>
-            <div class="container-lg custom-performances-area mt-4">
-                <div class="custom-performances-img">
+            <section class="m_hero">
+                <div class="m_hero_art">
+                    <Image src={background} alt=""/>
                 </div>
-                <div class="content custom-performances-content">
-                    <p>2026年度卒業公演</p>
-                    <p>準備中!!</p>
+                <div class="m_hero_shade"></div>
+                <div class="m_hero_frame">
+                    <Image class="m_hero_frame_top" src={gakuTop} alt=""/>
+                    <Image class="m_hero_frame_left" src={gakuLeft} alt=""/>
+                    <Image class="m_hero_frame_right" src={gakuRight} alt=""/>
                 </div>
-            </div>
-            <footer class="container-lg mt-5 pb-6">
-                <nav class="page-navigation flex-wrap">
-                </nav>
-            </footer>
+                <div class="m_hero_content">
+                    <p class="text-blue-200 fs-18">劇団万絵巻2026年度卒業公演</p>
+                    <p class="m_hero_copy">かいぶつは<br/>本物にはなれない</p>
+                    <h1 class="m_hero_title my-4">
+                        <Image src={logo} alt="アンカードルモンスター"/>
+                    </h1>
+                    <p class="">作・演出<span class="ml-3">ヴィクセン</span></p>
+                    <div class="my-4">
+                        <p class="fs-36"><span class="fs-20">2026.</span>12.11<small class="fs-20">金</small><span
+                            class="fs-20"> — </span>12.13<small class="fs-20">日</small></p>
+                        <p class="mt-2">大阪市立芸術創造館</p>
+                    </div>
+                    <a class="m_cta_btn"
+                       href="https://yorodu.corich.co/2026sotu/reserve">チケットを予約する<span>↗</span></a>
+                </div>
+                <a class="m_scroll_cue" href="">SCROLL TO EXPLORE <span>↓</span></a>
+                <span class="m_hero_side">THE UNFINISHED. THE FORGOTTEN. THE MONSTER.</span>
+            </section>
+            <nav class="m_nav">
+                <a href="">物語</a>
+                <a href="">公演日程</a>
+                <a href="">チケット</a>
+                <a href="">会場</a>
+                <a href="">スタッフ</a>
+            </nav>
+            <section class="">
+                <div class="">
+                    <span class="">01 / STORY</span>
+                    <h2 id="">絵の向こう側で、<br/>わたしは何を失ったのか。</h2>
+                </div>
+                <div class="">
+                    <p>毎日悪夢にうなされ、生きている実感も持てない会社員の煙上冬芽は、偶然届いた手紙をきっかけにとある美術館を訪れる。</p>
+                    <p class="">― 絵本作家・雲田真幌路の個展 ―</p>
+                    <p>しかし、そこで彼女は展示されたひとつの絵の中に引きずり込まれてしまう。辿り着いた先は、人像や塑像など「にせもの」と呼ばれる不完全な存在が集まる奇怪な塔。</p>
+                    <p>自分自身も核となる記憶を失ったにせものだと言われた冬芽は、自分の失ったものを知り、「本物の自分」に戻るため塔へと足を踏み入れる。</p>
+                    <p class="">自分は何を失ってしまったのか。<br/>毎日見る悪夢は、本当に夢だったのだろうか。</p>
+                </div>
+            </section>
         </article>
     </main>
-</Layout>
+    <footer>
+    </footer>
+</BaseLayout>
 
 <style>
-    .custom-performances-area {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
-        gap: 2.5rem;
-        grid-template-areas: "img" "content";
+    @keyframes arrive {
+        from {
+            opacity: 0;
+            transform: translateY(18px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    @media screen and (min-width: 768px) {
-        .custom-performances-area {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr;
-            gap: 2.5rem;
-            grid-template-areas: "content img";
-            align-items: start;
+    @keyframes descend {
+        50% {
+            transform: translateY(6px);
         }
+    }
 
-        .custom-performances-img {
-            grid-area: img;
-            position: sticky;
-            top: 0;
-        }
+    .m_header {
+        border-bottom: 1px solid #ffffff26;
+    }
 
-        .custom-performances-content {
-            grid-area: content;
+    .m_header_area {
+        min-height: 68px;
+        display: flex;
+        padding: 0 4vw;
+        justify-content: space-between;
+        align-self: flex-start;
+        align-items: center;
+    }
+
+    .m_logo {
+        display: inline-flex;
+        width: fit-content;
+        height: fit-content;
+        align-items: center;
+        gap: .5rem;
+        padding: .25rem .5rem;
+        border-radius: 8px;
+    }
+
+    .m_hero {
+        position: relative;
+        min-height: min(1000px, 105svh);
+        display: flex;
+        align-items: center;
+        isolation: isolate;
+    }
+
+    .m_hero_art {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        left: 36%;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 60%;
         }
+    }
+
+    .m_hero_content {
+        position: relative;
+        z-index: 1;
+        width: min(740px, 64%);
+        padding: 80px 0 100px 7vw;
+        animation: 1.4s ease-out both arrive;
+    }
+
+    .m_hero_frame {
+        display: flex;
+        inset: 30px 32px;
+        z-index: 0;
+        opacity: .65;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .m_hero_frame_top {
+        position: absolute;
+        width: 100%;
+        height: 44px;
+        top: 0;
+        object-fit: fill;
+    }
+
+    .m_hero_frame_right {
+        position: absolute;
+        right: 0;
+        top: 44px;
+        width: 44px;
+        height: 79%;
+        object-fit: fill;
+    }
+
+    .m_hero_frame_left {
+        position: absolute;
+        left: 0;
+        top: 44px;
+        width: 48px;
+        height: 94%;
+        object-fit: fill;
+    }
+
+    .m_hero_shade {
+        background: linear-gradient(90deg, #1a1a1a 15%, #1a1a1ae6 32%, #1a1a1a26 70%), linear-gradient(0deg, #1a1a1a, transparent 24%, transparent 80%, #1a1a1a80);
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .m_hero_copy {
+        margin-top: 32px;
+        font-size: 3rem;
+        line-height: 1.25;
+    }
+
+    .m_hero_title {
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .m_header_ticket {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+        font-size: .875rem;
+        border-bottom: 1px solid #c5d7fb;
+        padding: 8px 0;
+    }
+
+    .m_cta_btn {
+        background: #c5d7fb;
+        color: #1a1a1a;
+        border: 1px solid #c5d7fb;
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 52px;
+        min-height: 56px;
+        padding: 16px 24px;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: background .25s, transform .25s;
+
+        &:hover {
+            background: #d9e6ff;
+            transform: translateY(-2px);
+        }
+    }
+
+    .m_scroll_cue {
+        position: absolute;
+        bottom: 24px;
+        left: 8vw;
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        color: #b3b3b3;
+        font-size: .875rem;
+    }
+
+    .m_hero_side {
+        position: absolute;
+        right: 12px;
+        top: 26%;
+        writing-mode: vertical-rl;
+        font-size: .875rem;
+        color: #b3b3b3;
+    }
+
+    .m_nav {
+        display: flex;
+        justify-content: center;
+        gap: clamp(24px, 5vw, 72px);
+        padding: 24px;
+        border-block: 1px solid #ffffff26;
+        font-size: .875rem;
     }
 </style>

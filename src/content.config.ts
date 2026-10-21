@@ -43,6 +43,8 @@ const performances = defineCollection({
                 price: z.number(),
             })
         ).optional(),
+        overview: z.boolean().optional().default(false),
+        noindex: z.boolean().optional().default(false),
     }),
 });
 
