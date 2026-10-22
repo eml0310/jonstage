@@ -104,6 +104,12 @@ const article: Article = {
                     </video>
                 </div>
             )}
+            <details class="disclosure container-lg my-3">
+                <summary class="disclosure-header">このページの目次</summary>
+                <nav class="disclosure-body toc">
+                    <TableOfContents items={toc}/>
+                </nav>
+            </details>
             <div class="custom-layout-grid mb-6">
                 <div class="custom-main-content content">
                     <Content/>
@@ -123,20 +129,35 @@ const article: Article = {
 
 <style>
     .custom-layout-grid {
-        display: grid;
-        justify-content: center;
-        grid-template-columns: minmax(auto, min-content) 704px minmax(auto, 288px);
-        grid-template-areas: "side main toc";
     }
 
     .custom-main-content {
-        grid-area: main;
+        max-width: 704px;
+        margin: 0 auto;
         padding: 0 1rem;
     }
 
     .custom-toc {
-        grid-area: toc;
+        display: none;
         padding: 0 1rem;
+    }
+
+    @media screen and (min-width: 992px) {
+        .custom-layout-grid {
+            display: grid;
+            justify-content: center;
+            grid-template-columns: minmax(auto, min-content) 704px minmax(auto, 288px);
+            grid-template-areas: "side main toc";
+        }
+
+        .custom-toc {
+            display: block;
+            grid-area: toc;
+        }
+
+        .custom-main-content {
+            grid-area: main;
+        }
     }
 
     .toc-inner {
