@@ -9,75 +9,129 @@ import gakuTop from '../../../assets/performances/2026/encadrementstar/gaku-top.
 import gakuLeft from '../../../assets/performances/2026/encadrementstar/gaku-left.png';
 import gakuRight from '../../../assets/performances/2026/encadrementstar/gaku-right.png';
 import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
+import NorthEast from '../../../assets/performances/2026/encadrementstar/north-east.svg';
+import South from '../../../assets/performances/2026/encadrementstar/south.svg';
 ---
 <BaseLayout title={`アンカードルモンスター - 公演`} description={``} noindex>
-    <header class="m_header bg-grey-900 text-white">
-        <nav class="m_header_area">
-            <a class="m_logo h5 bg-white text-grey-900" href="/">
-                <Logo width={32} height={32}/>
-                劇団万絵巻
-            </a>
-            <p class="fs-18">2026年度 卒業公演</p>
-            <a class="m_header_ticket" href="https://yorodu.corich.co/2026sotu/reserve">チケット予約 ↗</a>
-        </nav>
-    </header>
-    <main class="bg-grey-900 text-white">
-        <article>
-            <section class="m_hero">
-                <div class="m_hero_art">
-                    <Image src={background} alt=""/>
-                </div>
-                <div class="m_hero_shade"></div>
-                <div class="m_hero_frame">
-                    <Image class="m_hero_frame_top" src={gakuTop} alt=""/>
-                    <Image class="m_hero_frame_left" src={gakuLeft} alt=""/>
-                    <Image class="m_hero_frame_right" src={gakuRight} alt=""/>
-                </div>
-                <div class="m_hero_content">
-                    <p class="text-blue-200 fs-18">劇団万絵巻2026年度卒業公演</p>
-                    <p class="m_hero_copy">かいぶつは<br/>本物にはなれない</p>
-                    <h1 class="m_hero_title my-4">
-                        <Image src={logo} alt="アンカードルモンスター"/>
-                    </h1>
-                    <p class="">作・演出<span class="ml-3">ヴィクセン</span></p>
-                    <div class="my-4">
-                        <p class="fs-36"><span class="fs-20">2026.</span>12.11<small class="fs-20">金</small><span
-                            class="fs-20"> — </span>12.13<small class="fs-20">日</small></p>
-                        <p class="mt-2">大阪市立芸術創造館</p>
-                    </div>
-                    <a class="m_cta_btn"
-                       href="https://yorodu.corich.co/2026sotu/reserve">チケットを予約する<span>↗</span></a>
-                </div>
-                <a class="m_scroll_cue" href="">SCROLL TO EXPLORE <span>↓</span></a>
-                <span class="m_hero_side">THE UNFINISHED. THE FORGOTTEN. THE MONSTER.</span>
-            </section>
-            <nav class="m_nav">
-                <a href="">物語</a>
-                <a href="">公演日程</a>
-                <a href="">チケット</a>
-                <a href="">会場</a>
-                <a href="">スタッフ</a>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Klee+One&display=swap" rel="stylesheet">
+    <div class="m_body hina-mincho-regular">
+        <header class="m_header bg-grey-900 text-white">
+            <nav class="m_header_area">
+                <a class="m_logo h5 bg-white text-grey-900" href="/">
+                    <Logo width={32} height={32}/>
+                    劇団万絵巻
+                </a>
+                <p class="fs-18">2026年度 卒業公演</p>
+                <a class="m_header_ticket" href="https://yorodu.corich.co/2026sotu/reserve">チケット予約 <NorthEast width={16} height={16}/></a>
             </nav>
-            <section class="">
-                <div class="">
-                    <span class="">01 / STORY</span>
-                    <h2 id="">絵の向こう側で、<br/>わたしは何を失ったのか。</h2>
-                </div>
-                <div class="">
-                    <p>毎日悪夢にうなされ、生きている実感も持てない会社員の煙上冬芽は、偶然届いた手紙をきっかけにとある美術館を訪れる。</p>
-                    <p class="">― 絵本作家・雲田真幌路の個展 ―</p>
-                    <p>しかし、そこで彼女は展示されたひとつの絵の中に引きずり込まれてしまう。辿り着いた先は、人像や塑像など「にせもの」と呼ばれる不完全な存在が集まる奇怪な塔。</p>
-                    <p>自分自身も核となる記憶を失ったにせものだと言われた冬芽は、自分の失ったものを知り、「本物の自分」に戻るため塔へと足を踏み入れる。</p>
-                    <p class="">自分は何を失ってしまったのか。<br/>毎日見る悪夢は、本当に夢だったのだろうか。</p>
-                </div>
-            </section>
-        </article>
-    </main>
-    <footer>
-    </footer>
+        </header>
+        <main class="bg-grey-900 text-white">
+            <article>
+                <section class="m_hero">
+                    <div class="m_hero_art">
+                        <Image src={background} alt=""/>
+                    </div>
+                    <div class="m_hero_shade"></div>
+                    <div class="m_hero_frame">
+                        <Image class="m_hero_frame_top" src={gakuTop} alt=""/>
+                        <Image class="m_hero_frame_left" src={gakuLeft} alt=""/>
+                        <Image class="m_hero_frame_right" src={gakuRight} alt=""/>
+                    </div>
+                    <div class="m_hero_content">
+                        <p class="text-blue-200 fs-18">劇団万絵巻2026年度卒業公演</p>
+                        <p class="m_hero_copy klee-one-regular">かいぶつは<br/>本物にはなれない</p>
+                        <h1 class="m_hero_title my-4">
+                            <Image src={logo} alt="アンカードルモンスター"/>
+                        </h1>
+                        <p class="">作・演出<span class="ml-3">ヴィクセン</span></p>
+                        <div class="my-4">
+                            <p class="fs-36"><span class="fs-20">2026.</span>12.11<small class="fs-20">金</small><span
+                                class="fs-20"> — </span>12.13<small class="fs-20">日</small></p>
+                            <p class="mt-2">大阪市立芸術創造館</p>
+                        </div>
+                        <a class="m_cta_btn" href="https://yorodu.corich.co/2026sotu/reserve">チケットを予約する<NorthEast width={20} height={20}/></a>
+                    </div>
+                    <a class="m_scroll_cue" href="">スクロールして続きを見る <South width={16} height={16}/></a>
+                    <span class="m_hero_side">劇団万絵巻</span>
+                </section>
+                <nav class="m_nav">
+                    <a href="">物語</a>
+                    <a href="">公演日程</a>
+                    <a href="">チケット</a>
+                    <a href="">会場</a>
+                    <a href="">スタッフ</a>
+                </nav>
+                <section class="m_story_section">
+                    <div class="">
+                        <span class="text-blue-200">01 / STORY</span>
+                        <h2 id="" class="h2 mt-3">あらすじ</h2>
+                    </div>
+                    <div class="klee-one-regular fs-18">
+                        <p>毎日悪夢にうなされ、生きている実感も持てない会社員の煙上冬芽は偶然届いた手紙をきっかけにとある美術館を訪れる。</p>
+                        <p class="text-blue-200 mt-3">ー絵本作家・雲田真幌路の個展ー</p>
+                        <p class="mt-3">しかし、そこで彼女は展示されたひとつの絵の中に引きずり込まれてしまう。辿り着いた先は、人像や塑像など「にせもの」と呼ばれる不完全な存在が集まる奇怪な塔。</p>
+                        <p class="mt-3">自分自身も核となる記憶を失ったにせものだと言われた冬芽は、自分の失ったものを知り、「本物の自分」に戻るため塔へと足を踏み入れる。</p>
+                        <p class="text-blue-200 mt-3">自分は何を失ってしまったのか。<br/>毎日見る悪夢は、本当に夢だったのだろうか。</p>
+                    </div>
+                    <span class="m_story_flame"></span>
+                </section>
+                <section class="m_story_section">
+                    <div>
+                        <span class="text-blue-200">02 / SCHEDULE</span>
+                        <h2 id="" class="h2 mt-3">スケジュール</h2>
+                        <p class="mt-4">2026年12月11日（金）— 13日（日）<br>全4公演 ／ 大阪市立芸術創造館</p>
+                    </div>
+                    <div>
+                        <div class=""><p class="day">
+                            12.11 <span>金</span></p>
+                            <p>
+                                <span class="">1st</span>
+                                <time datetime="2026-12-11T17:30:00+09:00">17:30</time>
+                                <small>— 20:00</small>
+                            </p>
+                        </div>
+                        <div class="">
+                            <p class="">12.12 <span>土</span></p>
+                            <div>
+                                <p>
+                                    <span class="">2nd</span>
+                                    <time datetime="2026-12-12T13:30:00+09:00">13:30</time>
+                                    <small>— 16:00</small>
+                                </p>
+                                <p>
+                                    <span class="">3rd</span>
+                                    <time datetime="2026-12-12T17:30:00+09:00">17:30</time>
+                                    <small>— 20:00</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </main>
+        <footer>
+        </footer>
+    </div>
 </BaseLayout>
 
 <style>
+    .hina-mincho-regular {
+        font-family: "Hina Mincho", serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .klee-one-regular {
+        font-family: "Klee One", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .m_body {
+    }
+
     @keyframes arrive {
         from {
             opacity: 0;
@@ -109,6 +163,7 @@ import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
     }
 
     .m_logo {
+        font-family: "Noto Sans JP", "Noto Sans", sans-serif;
         display: inline-flex;
         width: fit-content;
         height: fit-content;
@@ -208,7 +263,7 @@ import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
 
     .m_header_ticket {
         display: flex;
-        gap: 28px;
+        gap: 16px;
         align-items: center;
         font-size: .875rem;
         border-bottom: 1px solid #c5d7fb;
@@ -240,7 +295,7 @@ import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
         bottom: 24px;
         left: 8vw;
         display: flex;
-        gap: 24px;
+        gap: 16px;
         align-items: center;
         color: #b3b3b3;
         font-size: .875rem;
@@ -262,5 +317,30 @@ import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
         padding: 24px;
         border-block: 1px solid #ffffff26;
         font-size: .875rem;
+    }
+
+    .m_story_section {
+        position: relative;
+        padding-block: 140px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 48px;
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 72px;
+        border-bottom: 1px solid #ffffff26;
+        scroll-margin-top: 24px;
+    }
+
+    .m_story_flame {
+        position: absolute;
+        top: 140px;
+        left: 85px;
+        width: 230px;
+        height: 320px;
+        border: 1px solid #cda6ff26;
+        transform: rotate(-12deg);
+        box-shadow: 0 0 0 12px #cda6ff05, inset 0 0 0 12px #cda6ff05;
+        pointer-events: none;
     }
 </style>
