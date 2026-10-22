@@ -12,7 +12,7 @@ import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
 import NorthEast from '../../../assets/performances/2026/encadrementstar/north-east.svg';
 import South from '../../../assets/performances/2026/encadrementstar/south.svg';
 ---
-<BaseLayout title={`アンカードルモンスター - 公演`} description={``} noindex>
+<BaseLayout title={`アンカードルモンスター - 公演`} description={`かいぶつは本物にはなれない`} noindex>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Klee+One&display=swap" rel="stylesheet">
@@ -23,11 +23,11 @@ import South from '../../../assets/performances/2026/encadrementstar/south.svg';
                     <Logo width={32} height={32}/>
                     劇団万絵巻
                 </a>
-                <p class="fs-18">2026年度 卒業公演</p>
+                <p class="fs-18 d-none d-sm-block">2026年度 卒業公演</p>
                 <a class="m_header_ticket" href="https://yorodu.corich.co/2026sotu/reserve">チケット予約 <NorthEast width={16} height={16}/></a>
             </nav>
         </header>
-        <main class="bg-grey-900 text-white">
+        <main id="top" class="bg-grey-900 text-white">
             <article>
                 <section class="m_hero">
                     <div class="m_hero_art">
@@ -53,20 +53,20 @@ import South from '../../../assets/performances/2026/encadrementstar/south.svg';
                         </div>
                         <a class="m_cta_btn" href="https://yorodu.corich.co/2026sotu/reserve">チケットを予約する<NorthEast width={20} height={20}/></a>
                     </div>
-                    <a class="m_scroll_cue" href="">スクロールして続きを見る <South width={16} height={16}/></a>
+                    <a class="m_scroll_cue" href="#story">スクロールして続きを見る <South width={16} height={16}/></a>
                     <span class="m_hero_side">劇団万絵巻</span>
                 </section>
-                <nav class="m_nav">
-                    <a href="">物語</a>
-                    <a href="">公演日程</a>
-                    <a href="">チケット</a>
-                    <a href="">会場</a>
-                    <a href="">スタッフ</a>
+                <nav class="m_nav" aria-label="公演情報">
+                    <a href="#story">物語</a>
+                    <a href="#schedule">公演日程</a>
+                    <a href="#tickets">チケット</a>
+                    <a href="#access">会場</a>
+                    <a href="#staff">スタッフ</a>
                 </nav>
-                <section class="m_story_section">
-                    <div class="">
+                <section class="m_story_section" id="story">
+                    <div class="m_section_heading">
                         <span class="text-blue-200">01 / STORY</span>
-                        <h2 id="" class="h2 mt-3">あらすじ</h2>
+                        <h2 id="story-title" class="h2 mt-3">あらすじ</h2>
                     </div>
                     <div class="klee-one-regular fs-18">
                         <p>毎日悪夢にうなされ、生きている実感も持てない会社員の煙上冬芽は偶然届いた手紙をきっかけにとある美術館を訪れる。</p>
@@ -77,41 +77,175 @@ import South from '../../../assets/performances/2026/encadrementstar/south.svg';
                     </div>
                     <span class="m_story_flame"></span>
                 </section>
-                <section class="m_story_section">
-                    <div>
+                <section class="m_story_section" id="schedule">
+                    <div class="m_section_heading">
                         <span class="text-blue-200">02 / SCHEDULE</span>
-                        <h2 id="" class="h2 mt-3">スケジュール</h2>
-                        <p class="mt-4">2026年12月11日（金）— 13日（日）<br>全4公演 ／ 大阪市立芸術創造館</p>
+                        <h2 id="schedule-title" class="h2 mt-3">公演スケジュール</h2>
+                        <p class="m_section_note">2026年12月11日（金）— 13日（日）<br/>全4公演 ／ 大阪市立芸術創造館</p>
                     </div>
                     <div>
-                        <div class=""><p class="day">
+                        <div class="m_schedule_row"><p class="day">
                             12.11 <span>金</span></p>
                             <p>
-                                <span class="">1st</span>
+                                <span class="m_show_number">1st</span>
                                 <time datetime="2026-12-11T17:30:00+09:00">17:30</time>
                                 <small>— 20:00</small>
                             </p>
                         </div>
-                        <div class="">
-                            <p class="">12.12 <span>土</span></p>
+                        <div class="m_schedule_row">
+                            <p class="day">12.12 <span>土</span></p>
                             <div>
                                 <p>
-                                    <span class="">2nd</span>
+                                    <span class="m_show_number">2nd</span>
                                     <time datetime="2026-12-12T13:30:00+09:00">13:30</time>
                                     <small>— 16:00</small>
                                 </p>
                                 <p>
-                                    <span class="">3rd</span>
+                                    <span class="m_show_number">3rd</span>
                                     <time datetime="2026-12-12T17:30:00+09:00">17:30</time>
                                     <small>— 20:00</small>
                                 </p>
                             </div>
                         </div>
+                        <div class="m_schedule_row"><p class="day">
+                            12.13 <span>日</span></p>
+                            <p>
+                                <span class="m_show_number">4th</span>
+                                <time datetime="2026-12-13T13:30:00+09:00">13:30</time>
+                                <small>— 16:00</small>
+                            </p>
+                        </div>
+                        <ul class="m_notes">
+                            <li>公演時間は途中休憩10分を含め、150分を予定しています。</li>
+                            <li>受付開始・開場は、各公演の開演30分前です。</li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="m_story_section" id="tickets">
+                    <div class="m_section_heading">
+                        <span class="text-blue-200">03 / TICKETS</span>
+                        <h2 id="tickets-title" class="h2 mt-3">チケット</h2>
+                        <p class="m_section_note">ご予約はCoRichチケット！から。</p>
+                        <a class="m_cta_btn mt-5" href="https://yorodu.corich.co/2026sotu/reserve">チケットを予約する<NorthEast width={20} height={20}/></a>
+                    </div>
+                    <div>
+                        <dl class="m_price_list">
+                            <div>
+                                <dt>一般当日</dt>
+                                <dd>1,800<span>円</span></dd>
+                            </div>
+                            <div>
+                                <dt>一般前売</dt>
+                                <dd>1,500<span>円</span></dd>
+                            </div>
+                            <div>
+                                <dt>学生当日</dt>
+                                <dd>1,500<span>円</span></dd>
+                            </div>
+                            <div>
+                                <dt>学生前売</dt>
+                                <dd>1,200<span>円</span></dd>
+                            </div>
+                            <div>
+                                <dt>団体割（前売・1名様）</dt>
+                                <dd>1,000<span>円</span></dd>
+                            </div>
+                            <div>
+                                <dt>高校生以下</dt>
+                                <dd>800<span>円</span></dd>
+                            </div>
+                        </dl>
+                        <ul class="m_notes">
+                            <li>学生の方は当日学生証をお持ちください。</li>
+                            <li>団体割は3名様以上でのご予約が対象です。ご予約人数1名につき1,000円となります。</li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="m_story_section" id="access">
+                    <div class="m_section_heading">
+                        <span class="text-blue-200">04 / ACCESS</span>
+                        <h2 id="access-title" class="h2 mt-3">アクセス</h2>
+                    </div>
+                    <div>
+                        <h3 class="h3">大阪市立芸術創造館</h3>
+                        <p class="m_address">〒535-0003 大阪市旭区中宮1-11-14</p>
+                        <a class="m_text_link" href="https://www.google.com/maps/search/?api=1&query=大阪市立芸術創造館">Googleマップで見る <NorthEast width={16} height={16}/></a>
+                        <ul class="m_access_list">
+                            <li><span>Osaka Metro 谷町線</span>
+                                <p>「千林大宮」駅から徒歩10分 <small>約800m</small></p></li>
+                            <li><span>京阪本線</span>
+                                <p>「森小路」駅から徒歩10分 <small>約800m</small></p></li>
+                            <li><span>JRおおさか東線</span>
+                                <p>「城北公園通」駅から徒歩15分 <small>約1,100m</small></p></li>
+                            <li><span>大阪シティバス</span>
+                                <p>大阪駅前より83号系統「花博記念公園北口」行、または78号系統「守口車庫前」行で約30分。「旭区役所」下車すぐ。</p>
+                            </li>
+                        </ul>
+                        <a class="m_text_link" href="https://geijutsusozokan.jp">会場公式サイト <NorthEast width={16} height={16}/></a>
+                    </div>
+                </section>
+                <section class="m_story_section" id="staff">
+                    <div class="m_section_heading">
+                        <span class="text-blue-200">05 / STAFF</span>
+                        <h2 id="staff-title" class="h2 mt-3">スタッフ</h2>
+                        <p class="m_section_note">作・演出 ヴィクセン</p>
+                    </div>
+                    <dl class="m_staff_list">
+                        <div>
+                            <dt>舞台監督</dt>
+                            <dd>たゆたゆ</dd>
+                        </div>
+                        <div>
+                            <dt>大道具</dt>
+                            <dd>シェーレ皐月、犀音</dd>
+                        </div>
+                        <div>
+                            <dt>小道具</dt>
+                            <dd>犀音</dd>
+                        </div>
+                        <div>
+                            <dt>照明</dt>
+                            <dd>つばき</dd>
+                        </div>
+                        <div>
+                            <dt>音響</dt>
+                            <dd>慧流</dd>
+                        </div>
+                        <div>
+                            <dt>衣装</dt>
+                            <dd>ことん</dd>
+                        </div>
+                        <div>
+                            <dt>広報</dt>
+                            <dd>愛媛みかん</dd>
+                        </div>
+                        <div>
+                            <dt>制作</dt>
+                            <dd>パステル</dd>
+                        </div>
+                    </dl>
+                </section>
+                <section class="m_closing" aria-label="ご予約・お問い合わせ">
+                    <p class="text-blue-200 fs-18">劇団万絵巻 2026年度卒業公演</p>
+                    <p class="m_closing_title klee-one-regular">アンカードルモンスター</p>
+                    <p>2026.12.11(金) – 12.13(日)</p>
+                    <a class="m_cta_btn" href="https://yorodu.corich.co/2026sotu/reserve">チケットを予約する<NorthEast width={20} height={20}/></a>
+                    <div class="m_contact">
+                        <h2 class="h5">お問い合わせ</h2>
+                        <a href="mailto:mail@yoroweb.com">mail@yoroweb.com ↗</a>
+                        <p>公演当日のご連絡はメールからお願いいたします。</p>
+                        <div class="m_social">
+                            <a href="https://x.com/Yoroduwemaki">X ↗</a>
+                            <a href="https://www.instagram.com/yoroduwemaki">Instagram ↗</a>
+                        </div>
                     </div>
                 </section>
             </article>
         </main>
-        <footer>
+        <footer class="m_footer">
+            <a href="/">劇団万絵巻</a>
+            <a href="/performances/">公演一覧へ ↗</a>
+            <a href="#top">ページの先頭へ ↑</a>
         </footer>
     </div>
 </BaseLayout>
@@ -130,6 +264,21 @@ import South from '../../../assets/performances/2026/encadrementstar/south.svg';
     }
 
     .m_body {
+        background: #1a1a1a;
+        color: #e6e6e6;
+        font-size: 1rem;
+        line-height: 1.75;
+        letter-spacing: .02rem;
+        overflow: clip;
+    }
+
+    .m_body a {
+        text-decoration: none;
+    }
+
+    .m_body a:focus-visible {
+        outline: 2px solid #c5d7fb;
+        outline-offset: 6px;
     }
 
     @keyframes arrive {
@@ -342,5 +491,452 @@ import South from '../../../assets/performances/2026/encadrementstar/south.svg';
         transform: rotate(-12deg);
         box-shadow: 0 0 0 12px #cda6ff05, inset 0 0 0 12px #cda6ff05;
         pointer-events: none;
+    }
+
+    .m_section_heading h2 {
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        font-weight: 400;
+        line-height: 1.5;
+    }
+
+    .h3 {
+        font-size: 1.5rem;
+        line-height: 1.5;
+    }
+
+    .m_story_section .klee-one-regular p + p {
+        margin-top: 24px;
+    }
+
+    .m_section_note {
+        color: #b3b3b3;
+        font-size: .875rem;
+        margin-top: 24px;
+    }
+
+    .m_section_heading .m_cta_btn {
+        margin-top: 32px;
+    }
+
+    .m_schedule_row {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        align-items: start;
+        gap: 20px;
+        padding: 24px 0;
+        border-bottom: 1px solid #ffffff26;
+    }
+
+    .m_schedule_row:first-child {
+        border-top: 1px solid #ffffff26;
+    }
+
+    .day {
+        font-size: 2rem;
+        line-height: 1.5;
+    }
+
+    .day span {
+        font-size: .875rem;
+        margin-left: 8px;
+        color: #b3b3b3;
+    }
+
+    .m_schedule_row time {
+        font-size: 1.5rem;
+    }
+
+    .m_show_number {
+        color: #b3b3b3;
+        font-size: .875rem;
+        margin-right: 16px;
+    }
+
+    .m_schedule_row small {
+        font-size: .875rem;
+        margin-left: 8px;
+        color: #b3b3b3;
+        white-space: nowrap;
+    }
+
+    .m_schedule_row div p + p {
+        margin-top: 12px;
+    }
+
+    .m_notes {
+        color: #b3b3b3;
+        font-size: .875rem;
+        margin-top: 24px;
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .m_notes li {
+        padding-left: 1em;
+        position: relative;
+    }
+
+    .m_notes li::before {
+        content: '※';
+        position: absolute;
+        left: 0;
+    }
+
+    .m_notes li + li {
+        margin-top: 8px;
+    }
+
+    .m_price_list > div {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 16px 0;
+        border-bottom: 1px solid #ffffff26;
+    }
+
+    .m_price_list > div:first-child {
+        border-top: 1px solid #ffffff26;
+    }
+
+    .m_price_list dd {
+        font-size: 1.75rem;
+        white-space: nowrap;
+    }
+
+    .m_price_list dd span {
+        font-size: .875rem;
+        margin-left: 8px;
+    }
+
+    .m_address {
+        margin: 12px 0 20px;
+        font-size: .875rem;
+        color: #b3b3b3;
+    }
+
+    .m_text_link {
+        display: inline-flex;
+        align-items: center;
+        gap: 32px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #c5d7fb80;
+        color: #c5d7fb;
+        font-size: .875rem;
+        text-decoration: none;
+        transition: color .2s;
+
+        &:hover {
+            color: #cda6ff;
+        }
+    }
+
+    .m_access_list {
+        margin: 24px 0;
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .m_access_list li {
+        padding: 18px 0;
+        border-bottom: 1px solid #ffffff26;
+    }
+
+    .m_access_list li > span {
+        color: #b3b3b3;
+        font-size: .875rem;
+    }
+
+    .m_access_list p {
+        margin-top: 4px;
+    }
+
+    .m_access_list small {
+        font-size: .875rem;
+        color: #b3b3b3;
+        white-space: nowrap;
+    }
+
+    .m_staff_list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px 32px;
+    }
+
+    .m_staff_list dt {
+        color: #b3b3b3;
+        font-size: .875rem;
+        margin-bottom: 4px;
+    }
+
+    .m_closing {
+        padding: 100px 24px 64px;
+        text-align: center;
+        background: radial-gradient(ellipse at 50% 100%, #21004b80, transparent 70%);
+    }
+
+    .m_closing_title {
+        font-size: clamp(1.5rem, 4vw, 2.25rem);
+        margin: 24px 0 16px;
+    }
+
+    .m_closing > .m_cta_btn {
+        margin-top: 32px;
+    }
+
+    .m_contact {
+        margin-top: 80px;
+        font-size: .875rem;
+    }
+
+    .m_contact h2 {
+        color: #b3b3b3;
+        margin-bottom: 16px;
+    }
+
+    .m_contact > a {
+        color: #c5d7fb;
+        font-size: 1.125rem;
+        text-decoration: none;
+    }
+
+    .m_contact > p {
+        color: #b3b3b3;
+        margin-top: 12px;
+    }
+
+    .m_social {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 24px;
+    }
+
+    .m_social a {
+        color: #b3b3b3;
+        text-decoration: none;
+        transition: color .2s;
+
+        &:hover {
+            color: #cda6ff;
+        }
+    }
+
+    .m_footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        border-top: 1px solid #ffffff26;
+        padding: 28px 4vw;
+        color: #b3b3b3;
+        font-size: .875rem;
+    }
+
+    .m_footer a {
+        color: #b3b3b3;
+        text-decoration: none;
+        transition: color .2s;
+
+        &:hover {
+            color: #cda6ff;
+        }
+    }
+
+    .m_nav a {
+        color: #e6e6e6;
+        text-decoration: none;
+        transition: color .2s;
+
+        &:hover {
+            color: #cda6ff;
+        }
+    }
+
+    .m_scroll_cue span {
+        animation: 2.5s ease-in-out infinite descend;
+    }
+
+    @media (min-width: 1600px) {
+        .m_hero_art img {
+            object-position: center 60%;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .m_header_area {
+            min-height: 68px;
+            padding-inline: 20px;
+        }
+
+        .m_hero {
+            min-height: 830px;
+            align-items: flex-end;
+        }
+
+        .m_hero_art {
+            left: 0;
+            height: 100%;
+        }
+
+        .m_hero_art img {
+            object-position: center 48%;
+            opacity: .75;
+        }
+
+        .m_hero_shade {
+            background: linear-gradient(0deg, #1a1a1a 4%, #1a1a1af2 25%, #1a1a1a66 65%, #1a1a1a33);
+        }
+
+        .m_hero_frame {
+            inset: 16px 12px 32px;
+        }
+
+        .m_hero_frame_top {
+            height: 28px;
+        }
+
+        .m_hero_frame_left {
+            width: 28px;
+            height: 80%;
+        }
+
+        .m_hero_frame_right {
+            width: 28px;
+            height: 66%;
+        }
+
+        .m_hero_content {
+            padding: 180px 32px 100px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .m_hero_copy {
+            margin-top: 24px;
+            font-size: 2rem;
+        }
+
+        .m_hero_title {
+            max-width: 560px;
+            margin: 4px auto 0;
+        }
+
+        .m_hero_side {
+            display: none;
+        }
+
+        .m_scroll_cue {
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        .m_nav {
+            gap: 0;
+            justify-content: space-around;
+            padding: 20px 12px;
+        }
+
+        .m_story_section {
+            grid-template-columns: 1fr;
+            gap: 36px;
+            padding: 64px 24px;
+        }
+
+        .m_story_flame {
+            left: auto;
+            right: 48px;
+            top: 70px;
+            width: 140px;
+            height: 200px;
+        }
+
+        .m_section_heading {
+            position: relative;
+            z-index: 1;
+        }
+
+        .m_section_heading h2 {
+            margin-top: 12px;
+        }
+
+        .m_section_note {
+            margin-top: 16px;
+        }
+
+        .m_schedule_row {
+            grid-template-columns: 1fr 1.6fr;
+            gap: 12px;
+        }
+
+        .day {
+            font-size: 1.75rem;
+        }
+
+        .m_show_number {
+            margin-right: 12px;
+        }
+
+        .m_schedule_row small {
+            margin-left: 4px;
+        }
+
+        .m_schedule_row time {
+            font-size: 1.25rem;
+        }
+
+        .m_staff_list {
+            gap: 24px;
+        }
+
+        .m_closing {
+            padding-top: 72px;
+        }
+
+        .m_footer {
+            flex-wrap: wrap;
+            padding-inline: 24px;
+        }
+
+        .m_footer a:first-child {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 380px) {
+        .m_hero_content {
+            padding-inline: 24px;
+        }
+
+        .m_logo {
+            gap: 8px;
+            font-size: .875rem;
+        }
+
+        .m_header_ticket {
+            gap: 12px;
+        }
+
+        .m_schedule_row {
+            grid-template-columns: 1fr 1.7fr;
+        }
+
+        .m_schedule_row small {
+            font-size: .75rem;
+        }
+
+        .day {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .m_hero_content, .m_scroll_cue span {
+            animation: none;
+        }
+
+        .m_cta_btn, .m_text_link, .m_social a, .m_footer a, .m_nav a {
+            transition: none;
+        }
     }
 </style>
