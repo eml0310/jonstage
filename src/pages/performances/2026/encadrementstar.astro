@@ -4,10 +4,10 @@ import {Image} from "astro:assets";
 
 // Import images
 import Logo from "../../../assets/logo.svg";
-import background from '../../../assets/performances/2026/encadrementstar/background.png';
-import gakuTop from '../../../assets/performances/2026/encadrementstar/gaku-top.png';
-import gakuLeft from '../../../assets/performances/2026/encadrementstar/gaku-left.png';
-import gakuRight from '../../../assets/performances/2026/encadrementstar/gaku-right.png';
+import background from '../../../assets/performances/2026/encadrementstar/background.avif';
+import gakuTop from '../../../assets/performances/2026/encadrementstar/gaku-top.avif';
+import gakuLeft from '../../../assets/performances/2026/encadrementstar/gaku-left.avif';
+import gakuRight from '../../../assets/performances/2026/encadrementstar/gaku-right.avif';
 import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
 import NorthEast from '../../../assets/performances/2026/encadrementstar/north-east.svg';
 import South from '../../../assets/performances/2026/encadrementstar/south.svg';
@@ -31,19 +31,19 @@ import South from '../../../assets/performances/2026/encadrementstar/south.svg';
             <article>
                 <section class="m_hero">
                     <div class="m_hero_art">
-                        <Image src={background} alt=""/>
+                        <Image fetchpriority="high" loading="eager" src={background} alt=""/>
                     </div>
                     <div class="m_hero_shade"></div>
                     <div class="m_hero_frame">
-                        <Image class="m_hero_frame_top" src={gakuTop} alt=""/>
-                        <Image class="m_hero_frame_left" src={gakuLeft} alt=""/>
-                        <Image class="m_hero_frame_right" src={gakuRight} alt=""/>
+                        <Image loading="eager" class="m_hero_frame_top" src={gakuTop} alt=""/>
+                        <Image loading="eager" class="m_hero_frame_left" src={gakuLeft} alt=""/>
+                        <Image loading="eager" class="m_hero_frame_right" src={gakuRight} alt=""/>
                     </div>
                     <div class="m_hero_content">
                         <p class="text-blue-200 fs-18">劇団万絵巻2026年度卒業公演</p>
                         <p class="m_hero_copy klee-one-regular">かいぶつは<br/>本物にはなれない</p>
                         <h1 class="m_hero_title my-4">
-                            <Image src={logo} alt="アンカードルモンスター"/>
+                            <Image fetchpriority="high" loading="eager" src={logo} alt="アンカードルモンスター"/>
                         </h1>
                         <p class="">作・演出<span class="ml-3">ヴィクセン</span></p>
                         <div class="my-4">
@@ -769,8 +769,8 @@ import South from '../../../assets/performances/2026/encadrementstar/south.svg';
         }
 
         .m_hero {
-            min-height: 830px;
-            align-items: flex-end;
+            min-height: 500px;
+            align-items: flex-start;
         }
 
         .m_hero_art {
@@ -796,17 +796,19 @@ import South from '../../../assets/performances/2026/encadrementstar/south.svg';
         }
 
         .m_hero_frame_left {
+            top: 28px;
             width: 28px;
             height: 80%;
         }
 
         .m_hero_frame_right {
+            top: 28px;
             width: 28px;
             height: 66%;
         }
 
         .m_hero_content {
-            padding: 180px 32px 100px;
+            padding: 100px 32px 100px;
             width: 100%;
             text-align: center;
         }
