@@ -4,7 +4,7 @@ startDate: 2026-12-11
 endDate: 2026-12-13
 category: "2026年度卒業公演"
 overview: true
-noindex: true
+noindex: false
 venue:
   name: "大阪市立芸術創造館"
   address: "大阪市旭区中宮1-11-14"
@@ -14,7 +14,7 @@ excerpt: "かいぶつは本物にはなれない"
 flyer:
   front: "./front.avif"
   back: "./back.avif"
-thumbnail: "./logo.webp"
+thumbnail: "./ogp.png"
 offers:
   - label: "一般当日"
     price: 1800
