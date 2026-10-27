@@ -3,7 +3,7 @@ name: "アンカードルモンスター"
 startDate: 2026-12-11
 endDate: 2026-12-13
 category: "2026年度卒業公演"
-overview: true
+overview: false
 noindex: false
 venue:
   name: "大阪市立芸術創造館"

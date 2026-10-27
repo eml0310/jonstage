@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import {Image} from "astro:assets";
+const currentUrl = new URL(Astro.url.pathname, Astro.url);
 
 // Import images
 import Logo from "../../../assets/logo.svg";
@@ -12,8 +13,24 @@ import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
 import ogp from '../../../assets/performances/2026/encadrementstar/ogp.png';
 import NorthEast from '../../../assets/performances/2026/encadrementstar/north-east.svg';
 import South from '../../../assets/performances/2026/encadrementstar/south.svg';
+import type {BreadcrumbList} from "schema-dts";
+
+const breadcrumb: BreadcrumbList = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        {'@type': 'ListItem', position: 1, name: '劇団万絵巻', item: new URL('/', currentUrl.origin).toString()},
+        {'@type': 'ListItem', position: 2, name: '公演', item: new URL('/performances/', currentUrl.origin).toString()},
+        {
+            '@type': 'ListItem',
+            position: 3,
+            name: `2026年`,
+            item: new URL(`/performances/#2026`, currentUrl.origin).toString()
+        },
+        {'@type': 'ListItem', position: 4, name: `アンカードルモンスター`},
+    ],
+};
 ---
-<BaseLayout title={`アンカードルモンスター - 公演`} description={`かいぶつは本物にはなれない`} ogImage={{src: ogp.src, type: "image/png", width: ogp.width, height: ogp.height}}>
+<BaseLayout title={`アンカードルモンスター - 公演`} description={`かいぶつは本物にはなれない`} schema={[breadcrumb]} ogImage={{src: ogp.src, type: "image/png", width: ogp.width, height: ogp.height}}>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Klee+One&display=swap" rel="stylesheet">
