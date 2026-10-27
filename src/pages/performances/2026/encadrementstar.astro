@@ -13,7 +13,7 @@ import logo from '../../../assets/performances/2026/encadrementstar/logo.webp';
 import ogp from '../../../assets/performances/2026/encadrementstar/ogp.png';
 import NorthEast from '../../../assets/performances/2026/encadrementstar/north-east.svg';
 import South from '../../../assets/performances/2026/encadrementstar/south.svg';
-import type {BreadcrumbList} from "schema-dts";
+import type {BreadcrumbList, TheaterEvent} from "schema-dts";
 
 const breadcrumb: BreadcrumbList = {
     '@type': 'BreadcrumbList',
@@ -29,8 +29,65 @@ const breadcrumb: BreadcrumbList = {
         {'@type': 'ListItem', position: 4, name: `アンカードルモンスター`},
     ],
 };
+
+const theaterGroup = {
+    '@type': 'TheaterGroup' as const,
+    '@id': 'https://yoroweb.com/#theatergroup',
+    name: '劇団万絵巻',
+};
+
+const theaterEvent: TheaterEvent = {
+    '@type': 'TheaterEvent',
+    '@id': `${currentUrl.toString()}#theaterevent`,
+    url: currentUrl.toString(),
+    mainEntityOfPage: currentUrl.toString(),
+    name: 'アンカードルモンスター',
+    description: 'かいぶつは本物にはなれない',
+    startDate: '2026-12-11',
+    endDate: '2026-12-13',
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    inLanguage: 'ja',
+    image: new URL(ogp.src, currentUrl.origin).toString(),
+    location: {
+        '@type': 'Place',
+        name: '大阪市立芸術創造館',
+        url: 'https://geijutsusozokan.jp',
+        address: {
+            '@type': 'PostalAddress',
+            name: '大阪市旭区中宮1-11-14',
+            postalCode: '535-0003',
+            addressCountry: 'JP',
+        },
+    },
+    performer: theaterGroup,
+    organizer: {
+        ...theaterGroup,
+        url: 'https://yoroweb.com/',
+    },
+    director: {
+        '@type': 'Person',
+        name: 'ヴィクセン',
+    },
+    workPerformed: {
+        '@type': 'Play',
+        name: 'アンカードルモンスター',
+        author: {
+            '@type': 'Person',
+            name: 'ヴィクセン',
+        },
+    },
+    offers: [
+        { '@type': 'Offer', name: '一般当日', price: 1800, priceCurrency: 'JPY', url: 'https://yorodu.corich.co/2026sotu/reserve' },
+        { '@type': 'Offer', name: '一般前売', price: 1500, priceCurrency: 'JPY', url: 'https://yorodu.corich.co/2026sotu/reserve' },
+        { '@type': 'Offer', name: '学生当日', price: 1500, priceCurrency: 'JPY', url: 'https://yorodu.corich.co/2026sotu/reserve' },
+        { '@type': 'Offer', name: '学生前売', price: 1200, priceCurrency: 'JPY', url: 'https://yorodu.corich.co/2026sotu/reserve' },
+        { '@type': 'Offer', name: '団体割(1人分)', price: 1000, priceCurrency: 'JPY', url: 'https://yorodu.corich.co/2026sotu/reserve' },
+        { '@type': 'Offer', name: '高校生以下', price: 800, priceCurrency: 'JPY', url: 'https://yorodu.corich.co/2026sotu/reserve' },
+    ],
+};
 ---
-<BaseLayout title={`アンカードルモンスター - 公演`} description={`かいぶつは本物にはなれない`} schema={[breadcrumb]} ogImage={{src: ogp.src, type: "image/png", width: ogp.width, height: ogp.height}}>
+<BaseLayout title={`アンカードルモンスター - 公演`} description={`かいぶつは本物にはなれない`} schema={[breadcrumb, theaterEvent]} ogImage={{src: ogp.src, type: "image/png", width: ogp.width, height: ogp.height}}>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Klee+One&display=swap" rel="stylesheet">
