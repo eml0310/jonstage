@@ -31,6 +31,8 @@ const props = Astro.props;
     )}
     <Matomo />
     <Favicon />
+    <!-- polyfill automatically -->
+    <script type="module" async src="https://unpkg.com/invokers-polyfill@latest/invoker.min.js"></script>
 </head>
 <body class="aui">
 <slot/>
