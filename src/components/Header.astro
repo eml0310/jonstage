@@ -51,6 +51,10 @@ const path = Astro.url.pathname;
             </ul>
         </div>
         <div class="header-button">
+            <button class="search-iconbtn" type="button" command="show-modal" commandfor="search-dialog">
+                <i class="search-icon"></i>
+                検索
+            </button>
             <button class="hamburger-iconbtn" type="button" command="show-modal" commandfor="header-dialog-menu">
                 <i class="hamburger-icon"></i>
                 メニュー
@@ -90,6 +94,60 @@ const path = Astro.url.pathname;
     </div>
     <div class="drawer-footer"></div>
 </dialog>
-
-<style>
-</style>
+<dialog id="search-dialog" class="search-dialog">
+    <div class="search-dialog-header">
+        <h2 class="search-dialog-title">サイト内検索</h2>
+        <button class="btn btn-outline g-2" type="button" commandfor="search-dialog" command="close"><i class="hamburger-icon close"></i>閉じる</button>
+    </div>
+    <form class="search-dialog-form">
+        <label class="search-dialog-form-label" for="q">キーワード</label>
+        <div class="search-box">
+            <div class="search-box-fields">
+                <label class="search-box-label">
+                    <i class="search-box-search-icon ail-search"></i>
+                    <input id="q" class="search-box-input" type="search" name="q" autofocus style="border-radius: 8px;">
+                </label>
+            </div>
+            <button class="btn btn-fill is-lg" type="button">検索</button>
+        </div>
+    </form>
+    <div class="search-dialog-body">
+        <div class="banner banner-error mb-3">
+            <i class="banner-icon aif-error"></i>
+            <span class="banner-title">サイト内検索は準備中です</span>
+            <div class="banner-body">
+                <time class="banner-date">2026年11月2日</time>
+                <span class="banner-description">サイト内検索は準備中です。現在は動作しません。2026年中に対応する予定です。対応までしばらくお待ち下さい。</span>
+            </div>
+        </div>
+        <ul class="search-dialog-suggest-list">
+            <li class="search-dialog-suggest-title">よくある検索：</li>
+            <li><button class="btn is-sm btn-outline" type="button">アンカードルモンスター</button></li>
+            <li><button class="btn is-sm btn-outline" type="button">卒業公演</button></li>
+            <li><button class="btn is-sm btn-outline" type="button">予約</button></li>
+            <li><button class="btn is-sm btn-outline" type="button">殺陣</button></li>
+            <li><button class="btn is-sm btn-outline" type="button">コメディ</button></li>
+            <li><button class="btn is-sm btn-outline" type="button">役職紹介</button></li>
+            <li><button class="btn is-sm btn-outline" type="button">初心者</button></li>
+        </ul>
+        <template>
+            <div class="search-dialog-result-empty">
+                <h3>該当する情報が見つかりませんでした</h3>
+                <p>次の方法をお試しください。</p>
+                <ul class="list">
+                    <li>キーワードの表記を変える(例:「申込」→「申請」)</li>
+                    <li>キーワードの数を減らす</li>
+                </ul>
+            </div>
+        </template>
+        <template>
+            <p class="search-dialog-result-count">0件の結果</p>
+            <ul class="search-dialog-result">
+                <li>
+                    <a class="search-dialog-result-link" href="">マイナンバーカードの申請方法</a>
+                    <p class="search-dialog-result-desc">マイナンバーカードの申請に必要なものと、オンラインでの申請手順、受け取りまでの流れを説明します。</p>
+                </li>
+            </ul>
+        </template>
+    </div>
+</dialog>
