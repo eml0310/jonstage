@@ -23,8 +23,8 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "asagaoui": "^0.1.10",
-    "astro": "^7.4.2"
+    "asagaoui": "^0.1.11",
+    "astro": "^7.4.4"
   },
   "allowScripts": {
     "esbuild": true
