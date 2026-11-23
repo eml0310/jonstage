@@ -24,3 +24,5 @@ SNSや当日のパンフレットをお楽しみに！
 予約ページやアクセス方法なども載っているため、ぜひ閲覧とご予約をお待ちしております。
 
 https://yoroweb.com/performances/2026/encadrementstar/
+
+![image0.jpeg](./20261121200043-1.jpg)
