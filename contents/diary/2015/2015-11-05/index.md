@@ -3,7 +3,7 @@ title: "もくもく"
 date: 2015-11-05
 ---
 
-[![image00.jpg](./20151105_2209206.jpg)](http://dcimg.awalker.jp/img1.php?id=pyrtljwevfuy8bsb2p0ln9fhdhfbew02dbvkilieyjh7zwvslzeitwbgsuw5tbo3cl4vqagzshr7tetblp8mfonvetdpww2klnk8dy7oudtti0e2xscq2n5wqelyxjjrwol5opiujk4qdl4fevhcr6lpncxbdmtobg4u2h0v2woyhhuex2byyc32djf7qeocz8ahaq65)
+[![image00.jpg](./20151105_2209206.avif)](http://dcimg.awalker.jp/img1.php?id=pyrtljwevfuy8bsb2p0ln9fhdhfbew02dbvkilieyjh7zwvslzeitwbgsuw5tbo3cl4vqagzshr7tetblp8mfonvetdpww2klnk8dy7oudtti0e2xscq2n5wqelyxjjrwol5opiujk4qdl4fevhcr6lpncxbdmtobg4u2h0v2woyhhuex2byyc32djf7qeocz8ahaq65)
 
 こんばんは、一回生のジャンヌです。
 

@@ -3,7 +3,7 @@ title: "no title"
 date: 2012-08-12
 ---
 
-![](./a1_moblog_d9cf0f14s.jpg)
+![](./a1_moblog_d9cf0f14s.avif)
 
 どもっ、キャサリンです。
 

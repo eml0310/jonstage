@@ -1,5 +1,5 @@
 ---
 name: "ジョイプラス+"
 year: 2010
-thumbnail: "./hero.jpg"
+thumbnail: "./hero.avif"
 ---

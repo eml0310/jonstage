@@ -9,7 +9,7 @@ venue:
 playwright: "永田ユウカ / 黒川善樹"
 director: "永田ユウカ / 黒川善樹"
 excerpt: "2010年度の高槻キャンパス祭で行われた舞台公演。1回生による前座に続き、『ヒーローなんか辞めてやる！』と『センス！』の2作品を上演。また、特設ステージでの小屋公演や模擬店も展開されました。"
-thumbnail: "./2010tc_top.jpg"
+thumbnail: "./2010tc_top.avif"
 offers:
   - label: "無料"
     price: 0

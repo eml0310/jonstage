@@ -3,9 +3,9 @@ title: "今日のブログこれ"
 date: 2011-08-23
 ---
 
-![](./moblog_e5150d48.jpg)
+![](./moblog_e5150d48.avif)
 
-![](./moblog_580c696d.jpg)
+![](./moblog_580c696d.avif)
 
 どうも～
 

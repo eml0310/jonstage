@@ -39,7 +39,7 @@ Hello! How are you?
 
 ではでは土曜日に会いましょう！　Have a nice summer! See you again!
 
-![](./a1_1341740130.jpg)
+![](./a1_1341740130.avif)
 
 ## OBさん方へ
 

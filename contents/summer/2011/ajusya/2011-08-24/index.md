@@ -3,6 +3,6 @@ title: "今日のブログこれ"
 date: 2011-08-24
 ---
 
-![](./moblog_16d48ac7.jpg)
+![](./moblog_16d48ac7.avif)
 
 お疲れ様課長！！

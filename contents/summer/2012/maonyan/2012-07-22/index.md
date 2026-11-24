@@ -3,7 +3,7 @@ title: "⌒(ё)⌒"
 date: 2012-07-22
 ---
 
-![](./a1_dbbcfb65.jpg)
+![](./a1_dbbcfb65.avif)
 
 どうも！
 

@@ -3,7 +3,7 @@ title: "Hey guys, we have a blog for you!"
 date: 2021-05-24
 ---
 
-![image0.jpeg](./20210524_3990518.jpg)
+![image0.jpeg](./20210524_3990518.avif)
 こーんにーちはーー！！
 真弓でーーーす！
 

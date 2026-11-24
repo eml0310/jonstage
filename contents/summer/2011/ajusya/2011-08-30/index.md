@@ -3,9 +3,9 @@ title: "深くは語りません……"
 date: 2011-08-30
 ---
 
-![](./moblog_cd7698dc.jpg)
+![](./moblog_cd7698dc.avif)
 
-![](./moblog_7b6a046f.jpg)
+![](./moblog_7b6a046f.avif)
 
 博士（パッサ）です……
 

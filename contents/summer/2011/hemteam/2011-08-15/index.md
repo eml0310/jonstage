@@ -21,7 +21,7 @@ date: 2011-08-15
 
 この方達です。
 
-![itnr](./a1_image_1.jpg)
+![itnr](./a1_image_1.avif)
 
 itoxさんとのりさん。
 

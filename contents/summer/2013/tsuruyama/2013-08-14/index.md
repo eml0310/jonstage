@@ -3,7 +3,7 @@ title: "Like&love"
 date: 2013-08-14
 ---
 
-![](./a1_c73f9ba6.jpg)
+![](./a1_c73f9ba6.avif)
 
 盆ボンボン。
 

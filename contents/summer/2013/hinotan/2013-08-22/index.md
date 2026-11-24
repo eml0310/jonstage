@@ -3,9 +3,9 @@ title: "川原で稽古！"
 date: 2013-08-22
 ---
 
-![](./a1_9b65cdac.jpg)
+![](./a1_9b65cdac.avif)
 
-![](./a1_5a835b8f.jpg)
+![](./a1_5a835b8f.avif)
 
 どうも！
 

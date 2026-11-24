@@ -13,4 +13,4 @@ date: 2019-09-09
 
 [https://ticket.corich.jp/apply/102825/](https://ticket.corich.jp/apply/102825/)
 
-![IMG_9119.JPG](./20190909_3630275.jpg)
+![IMG_9119.JPG](./20190909_3630275.avif)

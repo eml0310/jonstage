@@ -3,9 +3,9 @@ title: "夏の風物詩"
 date: 2010-07-31
 ---
 
-![](./bf7bed17.jpg)
+![](./bf7bed17.avif)
 
-![](./8d2e32aa.jpg)
+![](./8d2e32aa.avif)
 
 どうも課長です(^o^)
 

@@ -25,4 +25,4 @@ SNSや当日のパンフレットをお楽しみに！
 
 https://yoroweb.com/performances/2026/encadrementstar/
 
-![image0.jpeg](./20261121200043-1.jpg)
+![image0.jpeg](./20261121200043-1.avif)

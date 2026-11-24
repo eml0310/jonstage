@@ -3,7 +3,7 @@ title: "Not Black,But  Blue man"
 date: 2014-07-07
 ---
 
-![](./a1_f4ded1a6.jpg)
+![](./a1_f4ded1a6.avif)
 
 週4は青い服着るようになった、二回のさとしです！
 

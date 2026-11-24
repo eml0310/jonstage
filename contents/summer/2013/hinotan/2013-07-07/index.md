@@ -15,4 +15,4 @@ date: 2013-07-07
 
 これからうちの一回生達がどんな成長を見せていくのか期待大です。
 
-![keikobaba](./a1_dca9c5b9.jpg)
+![keikobaba](./a1_dca9c5b9.avif)

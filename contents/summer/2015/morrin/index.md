@@ -3,7 +3,7 @@ name: "華麗なる毛利一族"
 year: 2015
 director: "もーりん"
 twitter: "https://x.com/morrin2015"
-thumbnail: "./kareinarurogo.png"
+thumbnail: "./kareinarurogo.avif"
 ---
 
 もーりんへ

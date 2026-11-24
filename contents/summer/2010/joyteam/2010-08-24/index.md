@@ -3,7 +3,7 @@ title: "本日の"
 date: 2010-08-24
 ---
 
-![](./e2b5dfad.jpg)
+![](./e2b5dfad.avif)
 
 演出。
 

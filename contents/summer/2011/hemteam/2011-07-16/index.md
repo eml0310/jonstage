@@ -3,11 +3,11 @@ title: "2011　夏　始動"
 date: 2011-07-16
 ---
 
-![](./a1_image_1.jpg)
+![](./a1_image_1.avif)
 
 キャスト発表なう
 
-![](./a1_image_2.jpg)
+![](./a1_image_2.avif)
 
 スタ会だん
 

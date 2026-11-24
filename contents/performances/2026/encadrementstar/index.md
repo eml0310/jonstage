@@ -14,7 +14,7 @@ excerpt: "かいぶつは本物にはなれない"
 flyer:
   front: "./front.avif"
   back: "./back.avif"
-thumbnail: "./ogp.png"
+thumbnail: "./ogp.avif"
 offers:
   - label: "一般当日"
     price: 1800

@@ -3,7 +3,7 @@ title: "おはようございます！！"
 date: 2009-08-20
 ---
 
-![sachiel.jpg](./3sakieru3-2009-08-20T06_35_02-1.jpg)
+![sachiel.jpg](./3sakieru3-2009-08-20T06_35_02-1.avif)
 
 みんなおはよう！
 

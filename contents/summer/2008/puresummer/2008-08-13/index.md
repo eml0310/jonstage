@@ -3,7 +3,7 @@ title: "昼からだよん"
 date: 2008-08-13
 ---
 
-![dfd685af.JPG](./dfd685af.JPG)
+![dfd685af.JPG](./dfd685af.avif)
 
 今日は練習昼から(。・ω・)ノ
 

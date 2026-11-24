@@ -3,7 +3,7 @@ title: "TACO紹介ぱーと６！"
 date: 2013-07-15
 ---
 
-![](./a1_357aec7d.jpg)
+![](./a1_357aec7d.avif)
 
 い、イグナイトパーーース ![](./a1_ic_biccuri02.gif)
 

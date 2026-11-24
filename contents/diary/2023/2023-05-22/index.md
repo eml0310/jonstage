@@ -11,7 +11,7 @@ date: 2023-05-22
 
 [
 
-![piGvQPXzPMs4qAvRSn4EiJ_FT5iZw44Q_DqFPtosxmYAJiYGAVJgzfdw8j5Vnd4SQhLuBjm0RPE=w1200-h630-p.png](./20230522_4277170.png)
+![piGvQPXzPMs4qAvRSn4EiJ_FT5iZw44Q_DqFPtosxmYAJiYGAVJgzfdw8j5Vnd4SQhLuBjm0RPE=w1200-h630-p.png](./20230522_4277170.avif)
 
 [予約フォーム](https://docs.google.com/forms/d/e/1faipqlsec94codtxcmzpusgcfokhze8e_54mghtwj5pq7ahwu6vyobg/viewform?fbclid=paaaz9f3b6k05dfxhffjypxoshrzhj74efi3aeuczktm7wxfpgo1hjogj2wei)
 

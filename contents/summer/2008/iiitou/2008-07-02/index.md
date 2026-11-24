@@ -3,7 +3,7 @@ title: "先週の"
 date: 2008-07-02
 ---
 
-![](./f3feded6.jpg)
+![](./f3feded6.avif)
 
 稽古の様子です。
 

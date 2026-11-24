@@ -3,7 +3,7 @@ title: "画伯誕生日！"
 date: 2012-05-23
 ---
 
-![attachment00.jpg](./20120523_2265324.jpg)
+![attachment00.jpg](./20120523_2265324.avif)
 
 きほです
 

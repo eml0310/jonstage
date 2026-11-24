@@ -3,9 +3,9 @@ title: "高槻祭"
 date: 2011-08-07
 ---
 
-![](./moblog_d5121ac7.jpg)
+![](./moblog_d5121ac7.avif)
 
-![](./moblog_eeadcc95.jpg)
+![](./moblog_eeadcc95.avif)
 
 どうも(・o・)ノ
 

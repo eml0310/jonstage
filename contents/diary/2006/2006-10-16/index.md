@@ -52,6 +52,6 @@ http://www.yoroweb.com/will/cast/cast\_kaho2.jpg](http://www.yoroweb.com/will/ca
 今日の
 
 三宅WiLL
-![](./20110116_1474117.jpg)
+![](./20110116_1474117.avif)
 タイトル「みやけぅぃる」
 今回の記事にショックを受け、今まさにみやけった三宅さんを激写！

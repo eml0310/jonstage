@@ -3,11 +3,11 @@ title: "実験"
 date: 2010-06-26
 ---
 
-![](./bcb95f68.jpg)
+![](./bcb95f68.avif)
 
-![](./d18c0b77.jpg)
+![](./d18c0b77.avif)
 
-![](./696f1dbf.jpg)
+![](./696f1dbf.avif)
 
 はい、私です
 

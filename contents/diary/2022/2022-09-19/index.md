@@ -49,4 +49,4 @@ date: 2022-09-19
 
 [https://ticket.corich.jp/apply/186083/](https://ticket.corich.jp/apply/186083/)
 
-最後に写真ドーン！![image1.jpeg](./20220919_4192516.jpg)
+最後に写真ドーン！![image1.jpeg](./20220919_4192516.avif)

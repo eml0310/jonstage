@@ -3,7 +3,7 @@ title: "no title"
 date: 2015-04-29
 ---
 
-![attachment00.jpg](./20150429_1934824.jpg)
+![attachment00.jpg](./20150429_1934824.avif)
 
 どもども2回生のほのかです！
 

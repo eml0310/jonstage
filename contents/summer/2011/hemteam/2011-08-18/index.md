@@ -101,7 +101,7 @@ UVERとかabingdonとか
 
 明日8時起床なんでねっ
 
-![](./a1_image_1.jpg)
+![](./a1_image_1.avif)
 
 ## 真夜中の……
 
