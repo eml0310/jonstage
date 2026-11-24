@@ -56,3 +56,5 @@ date: 2019-11-22
 チケット予約▷[https://ticket.corich.jp/apply/103840/](https://ticket.corich.jp/apply/103840/)
 
 ![IMG_0164.JPG](./20191122_3681341.jpg)
+
+![](./20191122_3681497.jpg)
