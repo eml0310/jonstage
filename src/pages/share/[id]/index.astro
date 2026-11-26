@@ -1,0 +1,133 @@
+---
+import {render} from 'astro:content';
+import type {InferGetStaticPropsType} from 'astro';
+import Favicon from '../../../components/head/Favicon.astro';
+import {getShares, sharedFiles} from '../../../lib/share';
+import Matomo from "../../../components/head/Matomo.astro";
+
+export async function getStaticPaths() {
+    return (await getShares()).map((entry) => ({
+        params: {id: entry.data.shareId},
+        props: {entry},
+    }));
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const {entry} = Astro.props;
+const {Content} = await render(entry);
+const files = sharedFiles(entry);
+const photos = files.filter((file) => file.image);
+const documents = files.filter((file) => !file.image);
+---
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="referrer" content="no-referrer"/>
+    <title>{entry.data.title} | 劇団万絵巻</title>
+    <Favicon/>
+    <Matomo/>
+</head>
+<body>
+<main>
+    <h1>{entry.data.title}</h1>
+    <Content/>
+    {photos.length > 0 && (
+        <>
+            <ul class="gallery" aria-label="画像">
+                {photos.map((photo) => (
+                    <li>
+                        <a href={photo.url} data-photo>
+                            <img src={photo.url} alt={photo.alt ?? ''} loading="lazy"/>
+                            <span>{photo.label}</span>
+                        </a>
+                    </li>
+                ))}
+            </ul>
+            <dialog aria-label="画像ビューアー">
+                <div class="controls">
+                    <button type="button" data-previous>前へ</button>
+                    <button type="button" data-next>次へ</button>
+                    <form method="dialog"><button type="submit" autofocus>閉じる</button></form>
+                </div>
+                <figure>
+                    <img alt=""/>
+                    <figcaption aria-live="polite"></figcaption>
+                </figure>
+            </dialog>
+        </>
+    )}
+    {documents.length > 0 && (
+        <ul class="documents" aria-label="配布ファイル">
+            {documents.map((file) => (
+                <li><a href={file.url} download={file.inlineType ? undefined : file.file}>
+                    {file.label} <small>（{file.file}）</small>
+                </a></li>
+            ))}
+        </ul>
+    )}
+</main>
+</body>
+</html>
+
+<script>
+    const dialog = document.querySelector('dialog');
+    if (dialog) {
+        const photos = [...document.querySelectorAll<HTMLAnchorElement>('[data-photo]')];
+        const image = dialog.querySelector('img')!;
+        const caption = dialog.querySelector('figcaption')!;
+        const previous = dialog.querySelector<HTMLButtonElement>('[data-previous]')!;
+        const next = dialog.querySelector<HTMLButtonElement>('[data-next]')!;
+        let current = 0;
+
+        function show(index: number) {
+            current = index;
+            const photo = photos[index];
+            image.src = photo.href;
+            image.alt = photo.querySelector('img')!.alt;
+            caption.textContent = photo.querySelector('span')!.textContent;
+            previous.disabled = index === 0;
+            next.disabled = index === photos.length - 1;
+        }
+
+        photos.forEach((photo, index) => {
+            photo.addEventListener('click', (event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                event.preventDefault();
+                show(index);
+                dialog.showModal();
+            });
+        });
+        previous.addEventListener('click', () => show(current - 1));
+        next.addEventListener('click', () => show(current + 1));
+        dialog.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft' && !previous.disabled) show(current - 1);
+            if (event.key === 'ArrowRight' && !next.disabled) show(current + 1);
+        });
+    }
+</script>
+
+<style>
+    body { margin: 0; font-family: system-ui, sans-serif; line-height: 1.65; }
+    main { max-width: 68rem; margin-inline: auto; padding: 2rem 1rem; }
+    a { color: #194e80; overflow-wrap: anywhere; }
+    .gallery {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+        gap: 1rem;
+    }
+    .gallery a { display: grid; gap: .4rem; }
+    .gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #f4f4f4; }
+    .documents li { margin-block: .75rem; }
+    dialog { max-width: calc(100% - 2rem); max-height: calc(100% - 2rem); box-sizing: border-box; }
+    dialog::backdrop { background: rgb(0 0 0 / 80%); }
+    .controls { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .controls form { margin-inline-start: auto; }
+    .controls button { font: inherit; padding: .25rem .65rem; }
+    figure { margin: 1rem 0 0; text-align: center; }
+    figure img { display: block; margin-inline: auto; max-width: 100%; max-height: 74dvh; }
+</style>

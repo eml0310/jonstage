@@ -83,4 +83,19 @@ const summerDiaries = defineCollection({
     }),
 });
 
-export const collections = {performances, diary, summerTeams, summerDiaries, feature};
+const share = defineCollection({
+    loader: glob({pattern: '[0-9][0-9][0-9][0-9]/*/index.md', base: './contents/share'}),
+    schema: z.object({
+        shareId: z.string().regex(/^[a-f0-9]{16}([a-f0-9]{16})?$/),
+        title: z.string().min(1),
+        files: z.array(z.object({
+            file: z.string().min(1).regex(/^[^/\\:*?"<>|\x00-\x1f]+$/).refine(
+                (name) => !name.startsWith('.')
+            ),
+            label: z.string().min(1),
+            alt: z.string().optional(),
+        })).min(1),
+    }),
+});
+
+export const collections = {performances, diary, summerTeams, summerDiaries, feature, share};
